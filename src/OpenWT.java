@@ -43,7 +43,7 @@ public class OpenWT {
         return distance;
     }
 
-    public static ArrayList<Point> openWindowTra (
+    public static ArrayList<Point> openWindowAlgorithm (
             ArrayList<Point> sourceList, double maxdis) {
         ArrayList<Point> targetList = new ArrayList<Point>();
         int startPoint = 0;
@@ -99,35 +99,27 @@ public class OpenWT {
     }
     public static void main(String[] args) throws Exception{
         double maxDistanceError = 30;
-        ArrayList<Point> ENPList = new ArrayList<Point>();
-        ArrayList<Point> rePointList = new ArrayList<Point>();
+        ArrayList<Point> beforeTraj = new ArrayList<Point>();
+        ArrayList<Point> afterTraj = new ArrayList<Point>();
         ArrayList<Point> points=new ArrayList<Point>();
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
         GetDataFromFile getData = new GetDataFromFile();
-        ENPList = getData.getDataFromFile(file,"1");
+        beforeTraj = getData.getDataFromFile(file,"1");
 
-        System.out.println(ENPList.size());
+        System.out.println(beforeTraj.size());
 
-        rePointList = openWindowTra(ENPList,maxDistanceError);
+        afterTraj = openWindowAlgorithm(beforeTraj,maxDistanceError);
 
-//        writeTestPointToFile(targetFile,rePointList);
-//        dbData dbdata=new dbData();
+//         getData.writeDataTomysql(points);
 
-//        points=dbData.transform(rePointList, "3");
-        getData.writeDataTomysql(points);
+        System.out.println("压缩后的轨迹数："+afterTraj.size());
 
-        System.out.println(ENPList.size());
-        System.out.println(points.size());
-
-        double cpL = ((double)rePointList.size() / (double)ENPList.size())* 100;
+        double cpL = ((double)afterTraj.size() / (double)beforeTraj.size())* 100;
         DecimalFormat df = new DecimalFormat("0.000000");
         System.out.println("压缩率为："+ df.format(cpL) + "%");
 
 //        double aveDisErr = getMeanDistError(ENPList,rePointList);
 //        System.out.println(aveDisErr);
-
-        //generateImage(ENPList,rePointList);
-
 
     }
 
