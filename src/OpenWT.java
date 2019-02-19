@@ -12,16 +12,6 @@ import java.util.Iterator;
  * @author ccl
  */
 public class OpenWT {
-    public static Point Spilict(String str){
-        Point point=new Point();
-        String[] strings=str.split(",");
-        point.setLatitude(Double.parseDouble(strings[0]));
-        point.setLongitude(Double.parseDouble(strings[1]));
-        point.setAltitude(Double.parseDouble(strings[3]));
-        point.setDate(strings[5]);
-        point.setTime(strings[6]);
-        return point;
-    }
 
     public static double Rad(double d){
         return d * Math.PI / 180.0;
@@ -44,12 +34,12 @@ public class OpenWT {
     public static double getDistance(Point A,Point B,Point C){
 
         double distance = 0;
-        double a = Math.abs(geoDist(A,B));//ȡ����ֵ
+        double a = Math.abs(geoDist(A,B));//计算边长
         double b = Math.abs(geoDist(B,C));
         double c = Math.abs(geoDist(A,C));
         double p = (a + b + c)/2.0;
-        double s = Math.sqrt(p * (p-a) * (p-b) * (p-c)); //�����������
-        distance = s * 2.0 / a; //ͶӰ�㵽�켣��ľ���
+        double s = Math.sqrt(p * (p-a) * (p-b) * (p-c)); //计算面积
+        distance = s * 2.0 / a; //Ͷ求出距离
         return distance;
     }
 
