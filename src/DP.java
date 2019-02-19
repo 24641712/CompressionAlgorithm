@@ -8,8 +8,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- *
- * @author
+ *道格拉斯-普克算法的实现
+ * @author ccl
  */
 public class DP {
     static int iNum;
@@ -66,7 +66,7 @@ public class DP {
     static void Delpt(ArrayList<Point> list,int a,int b) {
         int c=a+1;
         while(c<b)  {
-//            list.get(c).setRes('F');
+            list.get(c).setRes('F');
             c++;
         }
 
@@ -120,13 +120,13 @@ public class DP {
             else {
                 Delpt(list,p1,p2);
                 delTotal++;
-                System.out.println("Delpt: p1="+p1+" p2="+p2+"  ɾ��"+(p2-p1)+"�����ݵ�");
+                System.out.println("Delpt: p1="+p1+" p2="+p2+"  删除"+(p2-p1)+"个轨迹点");
             }
         }
     }
 
     //主函数
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         ArrayList<Point> list = new ArrayList<Point>();
         ArrayList<Point> points = new ArrayList<>();
@@ -134,18 +134,18 @@ public class DP {
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
         GetDataFromFile getData = new GetDataFromFile();
         LimitDis = (float) 0.0000298;
-        list = getDataFromFile(file);
+        list =getData.getDataFromFile(file,"1");
 
         Simp(list,0,list.size()-1);
         System.out.println(list.size());
-        System.out.println(targetList.size()+"   ��"+delTotal+"��ɾ����");
+        System.out.println(targetList.size()+"   删除"+delTotal+"个轨迹点");
 
 //        points = com.org.data.dbData.transform(targetList, "5");
 //        com.org.data.dbData. writeDataTomysql(points);
 
         double cpL  =  ((double)targetList.size() / (double)list.size())* 100;
         DecimalFormat df  =  new DecimalFormat("0.000000");
-        System.out.println("ѹ���ʣ�"+ df.format(cpL) + "%");
+        System.out.println("压缩率"+ df.format(cpL) + "%");
 
     }
 

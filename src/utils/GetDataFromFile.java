@@ -16,7 +16,6 @@ public class GetDataFromFile {
     public static ArrayList<Point> getDataFromFile(File f, String uid)
             throws Exception {
 
-//		File f = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\"+uid+".plt");
         ArrayList<Point> list = new ArrayList<Point>();
         if (f.exists() && f.isFile()) {
             InputStreamReader read = new InputStreamReader(new FileInputStream(f));

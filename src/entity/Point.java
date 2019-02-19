@@ -17,6 +17,8 @@ public class Point {
 
     private String time;  //时分秒
 
+    private char Res='T';  //是否是被删除轨迹点
+
     public String getUid() {
         return uid;
     }
@@ -59,6 +61,14 @@ public class Point {
 
     public String getTime() {
         return time;
+    }
+
+    public char getRes() {
+        return Res;
+    }
+
+    public void setRes(char res) {
+        Res = res;
     }
 
     public void setTime(String time) {
