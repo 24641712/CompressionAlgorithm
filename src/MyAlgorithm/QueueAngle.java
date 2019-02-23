@@ -1,6 +1,7 @@
 package MyAlgorithm;
 
 import entity.Point;
+import estimate.Estimate;
 import utils.GetDataFromFile;
 
 import java.io.File;
@@ -84,18 +85,17 @@ public class QueueAngle {
     public static void main(String[] args) throws Exception {
         ArrayList<Point> points = new ArrayList<>();
         ArrayList<Point> targetList = new ArrayList<Point>();
-        ArrayList<Point> list = new ArrayList<Point>();
+        ArrayList<Point> beforeTraj = new ArrayList<Point>();
+        Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         limitAngle = (float) -0.9836571;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
-        list = getData.getDataFromFile(file,"1");
-        System.out.println(list.size());
-        targetList = runAngle(list, 0, list.size()-1);
+        beforeTraj = getData.getDataFromFile(file,"1");
+        System.out.println(beforeTraj.size());
+        targetList = runAngle(beforeTraj, 0, beforeTraj.size()-1);
 //		getData.writeDataTomysql(points);
         System.out.println(targetList.size());
-        double cpL  =  ((double)targetList.size() / (double)list.size())* 100;
-        DecimalFormat df = new DecimalFormat("0.000000");
-        System.out.println("压缩率为："+ df.format(cpL) + "%");
+        estimate.CompressionRatio(beforeTraj.size(),targetList.size());
 
     }
 }

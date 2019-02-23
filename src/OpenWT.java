@@ -1,4 +1,5 @@
 import entity.Point;
+import estimate.Estimate;
 import utils.GetDataFromFile;
 
 import java.io.File;
@@ -9,7 +10,7 @@ import java.util.Iterator;
 
 /**
  * 开放窗口算法
- * @author ccl
+ * @Author ccl
  */
 public class OpenWT {
 
@@ -43,8 +44,15 @@ public class OpenWT {
         return distance;
     }
 
+    /*
+     *开放窗口算法实现
+     *@param sourceList 源轨迹集合
+     *@param maxdis 误差阈值
+     *@return 压缩后的轨迹点
+     **/
     public static ArrayList<Point> openWindowAlgorithm (
             ArrayList<Point> sourceList, double maxdis) {
+
         ArrayList<Point> targetList = new ArrayList<Point>();
         int startPoint = 0;
         int floatPoint = 2;
@@ -114,9 +122,8 @@ public class OpenWT {
 
         System.out.println("压缩后的轨迹数："+afterTraj.size());
 
-        double cpL = ((double)afterTraj.size() / (double)beforeTraj.size())* 100;
-        DecimalFormat df = new DecimalFormat("0.000000");
-        System.out.println("压缩率为："+ df.format(cpL) + "%");
+        Estimate estimate = new Estimate();
+        estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
 
 //        double aveDisErr = getMeanDistError(ENPList,rePointList);
 //        System.out.println(aveDisErr);

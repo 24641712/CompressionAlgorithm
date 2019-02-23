@@ -15,16 +15,17 @@ import java.util.ArrayList;
 public class GetDataFromFile {
     public static ArrayList<Point> getDataFromFile(File f, String uid)
             throws Exception {
-
         ArrayList<Point> list = new ArrayList<Point>();
         if (f.exists() && f.isFile()) {
             InputStreamReader read = new InputStreamReader(new FileInputStream(f));
             BufferedReader bReader = new BufferedReader(read);
             String str;
+            int id = 0;
             while ((str = bReader.readLine()) != null) {
                 Point point = new Point();
                 String[] strings = str.split(",");
                 point.setUid(uid);
+                point.setPid(id++);
                 point.setLatitude(Double.parseDouble(strings[0]));
                 point.setLongitude(Double.parseDouble(strings[1]));
                 point.setAltitude(Double.parseDouble(strings[3]));

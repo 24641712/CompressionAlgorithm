@@ -5,7 +5,10 @@ package entity;
  * @author ccl
  */
 public class Point {
+
     private String uid;
+
+    private int Pid;
 
     private double latitude;  //纬度
 
@@ -25,6 +28,14 @@ public class Point {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public int getPid() {
+        return Pid;
+    }
+
+    public void setPid(int pid) {
+        Pid = pid;
     }
 
     public double getLatitude() {
@@ -79,11 +90,13 @@ public class Point {
     public String toString() {
         return "Point{" +
                 "uid='" + uid + '\'' +
+                ", Pid=" + Pid +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", altitude=" + altitude +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
+                ", Res=" + Res +
                 '}';
     }
 }

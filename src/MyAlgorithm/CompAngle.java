@@ -1,6 +1,7 @@
 package MyAlgorithm;
 
 import entity.Point;
+import estimate.Estimate;
 import utils.GetDataFromFile;
 
 import java.io.File;
@@ -84,14 +85,14 @@ public class CompAngle {
 
         ArrayList<Point> points = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-        float comp=0;
         GetDataFromFile getData = new GetDataFromFile();
+        Estimate estimate = new Estimate();
+        float comp=0;
         limitAngle = (float) -0.9969571;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\1.plt");
         ArrayList<Point> beforeTraj=new ArrayList<Point>();
         beforeTraj = getData.getDataFromFile(file,"1");
         System.out.println(beforeTraj.size());
-        System.out.println("����ѹ���ʣ�%����");
         comp = 1-(float)(Double.parseDouble(scanner.next())/100.0);
         limitAngle = beforeTraj.size()/(comp*beforeTraj.size());
         System.out.println("limitAngle="+limitAngle);
@@ -100,15 +101,6 @@ public class CompAngle {
         System.out.println(targetList.size()+"   共删除"+delTotal+"个轨迹点");
         getData.writeDataTomysql(points);
 
-        double cpL = ((double)targetList.size() / (double)beforeTraj.size())* 100;
-        DecimalFormat df = new DecimalFormat("0.000000");
-        System.out.println("压缩率"+ df.format(cpL) + "%");
-
-
+        estimate.CompressionRatio(beforeTraj.size(),targetList.size());//压缩率
     }
-
-
-
-
-
 }
