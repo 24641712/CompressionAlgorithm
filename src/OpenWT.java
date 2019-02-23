@@ -14,11 +14,11 @@ import java.util.Iterator;
  */
 public class OpenWT {
 
-    public static double Rad(double d){
+    protected static double Rad(double d){
         return d * Math.PI / 180.0;
     }
 
-    public static double geoDist(Point pA,Point pB){
+    protected static double geoDist(Point pA,Point pB){
 
         double radLat1 = Rad(pA.getLatitude());
         double radLat2 = Rad(pB.getLatitude());
@@ -32,7 +32,7 @@ public class OpenWT {
         return distance;
     }
 
-    public static double getDistance(Point A,Point B,Point C){
+    protected static double getDistance(Point A,Point B,Point C){
 
         double distance = 0;
         double a = Math.abs(geoDist(A,B));//计算边长
@@ -113,24 +113,12 @@ public class OpenWT {
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
         GetDataFromFile getData = new GetDataFromFile();
         beforeTraj = getData.getDataFromFile(file,"1");
-
         System.out.println(beforeTraj.size());
-
         afterTraj = openWindowAlgorithm(beforeTraj,maxDistanceError);
-
 //         getData.writeDataTomysql(points);
-
         System.out.println("压缩后的轨迹数："+afterTraj.size());
-
         Estimate estimate = new Estimate();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
-
-//        double aveDisErr = getMeanDistError(ENPList,rePointList);
-//        System.out.println(aveDisErr);
-
+        estimate.CompressionError(beforeTraj,afterTraj);
     }
-
-
-
-
 }

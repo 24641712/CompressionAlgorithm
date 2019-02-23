@@ -10,7 +10,8 @@ import java.sql.DriverManager;
 import java.util.ArrayList;
 
 /**
- * @author
+ * 工具类：获取本地轨迹数据、写入数据库
+ * @author ccl
  */
 public class GetDataFromFile {
     public static ArrayList<Point> getDataFromFile(File f, String uid)
@@ -31,10 +32,8 @@ public class GetDataFromFile {
                 point.setAltitude(Double.parseDouble(strings[3]));
                 point.setDate(strings[5]);
                 point.setTime(strings[6]);
-//            System.out.println(point.toString());
                 list.add(point);
             }
-
             bReader.close();
             read.close();
         }
@@ -64,7 +63,6 @@ public class GetDataFromFile {
                 stat.setString(6, points.get(i).getTime());
                 stat.executeUpdate();
             }
-
             stat.close();
             conn.close();
         } catch (Exception e) {
@@ -72,38 +70,4 @@ public class GetDataFromFile {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        ArrayList< Point> list=new ArrayList<>();
-        ArrayList< Point> list1=new ArrayList<>();
-        File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
-        try {
-            list=getDataFromFile(file,"4");
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-
-        }
-//		list1.addAll(list.subList(2, 111));
-        writeDataTomysql(list);
-//		writeDataTomysql(list1);
-        System.out.println(list.size());
-        System.out.println("OK");
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

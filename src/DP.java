@@ -19,7 +19,7 @@ public class DP {
     private static int delTotal=0;
 
     //	计算两点之间的距离
-    static float p2pdis(Point pa,Point pb) {
+    protected static float p2pdis(Point pa,Point pb) {
         float d;
         d=(float)Math.sqrt(
                 (pa.getLatitude()-pb.getLatitude())*
@@ -30,7 +30,7 @@ public class DP {
     }
 
     //删除轨迹点
-    static void Delpt(ArrayList<Point> list,int a,int b) {
+    protected static void Delpt(ArrayList<Point> list,int a,int b) {
         int c=a+1;
         while(c<b){
             list.get(c).setRes('F');
