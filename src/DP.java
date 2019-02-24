@@ -1,5 +1,6 @@
 import entity.Point;
 import estimate.Estimate;
+import utils.Distance;
 import utils.GetDataFromFile;
 
 import java.io.BufferedReader;
@@ -43,28 +44,18 @@ public class DP {
      *@param list 源轨迹集合
      *@param p1 起始点
      *@param p2 终止点
-     *@return
+     *@return void
      **/
     static void DPAlgorithm(ArrayList<Point> list,int p1,int p2){
         float a,b,c,cosA,cosB,sinA,maxdis,curdis;
         int i = 0,maxNO = 0;
+        Distance distance = new Distance();
         System.out.println("p1="+p1+"  p2="+p2);
         if(p2-p1 >= 2){
             maxdis = 0;
-            c=p2pdis(list.get(p1),list.get(p2));
             i=p1+1;
             while(i < p2){
-                curdis = 0;
-                b = p2pdis(list.get(p1),list.get(i));
-                a = p2pdis(list.get(p2),list.get(i));
-                cosA = (b*b+c*c-a*a)/(2*b*c);
-                cosB = (a*a+c*c-b*b)/(2*a*c);
-                sinA = (float)Math.sqrt(1-cosA*cosA);
-                if((cosA == 0) || (cosB == 0))   {
-                    if(cosA == 0) {curdis = b;}
-                    else {curdis = a;}
-                }
-                else {curdis = b*sinA;    }
+                curdis = distance.CalculatedDis(list.get(p1),list.get(p2),list.get(i));
                 if(maxdis <= curdis)   {
                     maxdis = curdis;
                     maxNO = i;
