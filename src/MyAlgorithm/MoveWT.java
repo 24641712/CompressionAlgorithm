@@ -1,7 +1,11 @@
 package MyAlgorithm;
 
 import entity.Point;
+import estimate.Estimate;
+import utils.Distance;
+import utils.GetDataFromFile;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +15,8 @@ import java.util.ArrayList;
  * @Date 2019/2/24
  */
 public class MoveWT {
-    ArrayList<Point> afterTraj = new ArrayList<Point>();
+    static ArrayList<Point> afterTraj = new ArrayList<Point>();
+    static float LimitDis;
 
     /*
      *
@@ -21,20 +26,40 @@ public class MoveWT {
      *@param size 移动窗口大小
      *@return void
      **/
-    public void MoveWTAlgorithm(ArrayList<Point> beforeTraj,
+    public static void MoveWTAlgorithm(ArrayList<Point> beforeTraj,
                               int start,int end,int size){
-
-        for(int i=0;i<beforeTraj.size()-size;i++){
-
-
-
-
-
-
+        double maxdis = 0;
+        int index = 0;
+        Distance distance = new Distance();
+        for(int i=start;i<end-size;i++){
+          for(int j=i+1;j<i+1+size;j++){
+              double curdis = distance.CalculatedDis(beforeTraj.get(i),
+                      beforeTraj.get(i+1+size),beforeTraj.get(j));
+              if(maxdis < curdis){
+                  maxdis = curdis;
+                  index = j;
+              }
+          }
         }
-
+        System.out.println("maxdis = "+maxdis);
+        if(maxdis > LimitDis){
+            afterTraj.add(beforeTraj.get(index));
+            MoveWTAlgorithm(beforeTraj,start,index-1,size);
+            MoveWTAlgorithm(beforeTraj,index+1,end,size);
+        }
     }
 
+    public static void main(String[] args) throws Exception {
+        ArrayList<Point> beforeTraj = new ArrayList<Point>();
+        LimitDis = (float) 0.0000001;
+        Estimate estimate = new Estimate();
+        GetDataFromFile getData = new GetDataFromFile();
+        File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
+        beforeTraj =getData.getDataFromFile(file,"1");
+        MoveWTAlgorithm(beforeTraj,0,beforeTraj.size()-1,6);
+        System.out.println("压缩后轨迹点数："+afterTraj.size());
+        estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
+        estimate.CompressionError(beforeTraj,afterTraj);
 
-
+    }
 }

@@ -1,5 +1,6 @@
 import entity.Point;
 import estimate.Estimate;
+import utils.Distance;
 import utils.GetDataFromFile;
 
 import java.io.File;
@@ -13,37 +14,6 @@ import java.util.Iterator;
  * @Author ccl
  */
 public class OpenWT {
-
-    protected static double Rad(double d){
-        return d * Math.PI / 180.0;
-    }
-
-    protected static double geoDist(Point pA,Point pB){
-
-        double radLat1 = Rad(pA.getLatitude());
-        double radLat2 = Rad(pB.getLatitude());
-        double delta_lon = Rad(pB.getLongitude() - pA.getLongitude());
-        double top_1 = Math.cos(radLat2) * Math.sin(delta_lon);
-        double top_2 = Math.cos(radLat1) * Math.sin(radLat2) - Math.sin(radLat1) * Math.cos(radLat2) * Math.cos(delta_lon);
-        double top = Math.sqrt(top_1 * top_1 + top_2 * top_2);
-        double bottom = Math.sin(radLat1) * Math.sin(radLat2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.cos(delta_lon);
-        double delta_sigma = Math.atan2(top, bottom);
-        double distance = delta_sigma * 6378137.0;
-        return distance;
-    }
-
-    protected static double getDistance(Point A,Point B,Point C){
-
-        double distance = 0;
-        double a = Math.abs(geoDist(A,B));//计算边长
-        double b = Math.abs(geoDist(B,C));
-        double c = Math.abs(geoDist(A,C));
-        double p = (a + b + c)/2.0;
-        double s = Math.sqrt(p * (p-a) * (p-b) * (p-c)); //计算面积
-        distance = s * 2.0 / a; //Ͷ求出距离
-        return distance;
-    }
-
     /*
      *开放窗口算法实现
      *@param sourceList 源轨迹集合
@@ -58,12 +28,13 @@ public class OpenWT {
         int floatPoint = 2;
         int nowPoint = 1;
         int len = sourceList.size();
+        Distance distance = new Distance();
         ArrayList<Point> listPoint = new ArrayList<Point>();
         listPoint.add(sourceList.get(nowPoint));
         while(true) {
             boolean flag = false;
             for(Point point : listPoint) {
-                double disOfTwo = getDistance(sourceList.get(startPoint),sourceList.get(floatPoint),point);
+                double disOfTwo = distance.getDistance(sourceList.get(startPoint),sourceList.get(floatPoint),point);
                 System.out.println("disOfTwo="+disOfTwo);
                 if(disOfTwo >= 1.190){
                     flag = true;

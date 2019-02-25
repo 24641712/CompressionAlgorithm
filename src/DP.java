@@ -15,20 +15,9 @@ import java.util.ArrayList;
  */
 public class DP {
     static int iNum;
-    static float LimitDis;
+    static double LimitDis;
     private static ArrayList<Point> targetList = new ArrayList<Point>();
     private static int delTotal=0;
-
-    //	计算两点之间的距离
-    protected static float p2pdis(Point pa,Point pb) {
-        float d;
-        d=(float)Math.sqrt(
-                (pa.getLatitude()-pb.getLatitude())*
-                (pa.getLatitude()-pb.getLatitude())+
-                (pa.getLongitude()-pb.getLongitude())*
-                (pa.getLongitude()-pb.getLongitude()));
-        return d;
-    }
 
     //删除轨迹点
     protected static void Delpt(ArrayList<Point> list,int a,int b) {
@@ -47,7 +36,7 @@ public class DP {
      *@return void
      **/
     static void DPAlgorithm(ArrayList<Point> list,int p1,int p2){
-        float a,b,c,cosA,cosB,sinA,maxdis,curdis;
+        double a,b,c,cosA,cosB,sinA,maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
         System.out.println("p1="+p1+"  p2="+p2);
@@ -83,9 +72,9 @@ public class DP {
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> points = new ArrayList<>();
         Estimate estimate = new Estimate();
+        GetDataFromFile getData = new GetDataFromFile();
         //获取数据
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
-        GetDataFromFile getData = new GetDataFromFile();
         LimitDis = (float) 0.0000298;
         beforeTraj =getData.getDataFromFile(file,"1");
 
