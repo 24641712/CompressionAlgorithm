@@ -38,6 +38,9 @@ public class Distance {
         double c = p2pdis(pa,pb);
         double a = p2pdis(pb,pc);
         double b = p2pdis(pa,pc);
+        if(a==0 || b!=0 || c!=0){
+            return 0;
+        }
         cosA = (b*b+c*c-a*a)/(2*b*c);
         cosB = (a*a+c*c-b*b)/(2*a*c);
         sinA = (float)Math.sqrt(1-cosA*cosA);

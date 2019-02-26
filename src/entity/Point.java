@@ -4,7 +4,7 @@ package entity;
  * 轨迹点
  * @author ccl
  */
-public class Point {
+public class Point implements Comparable<Point> {
 
     private String uid;
 
@@ -98,5 +98,16 @@ public class Point {
                 ", time='" + time + '\'' +
                 ", Res=" + Res +
                 '}';
+    }
+
+    /*
+     *
+     *@param o
+     *@return
+     **/
+    @Override
+    public int compareTo(Point o) {
+        int i = this.getPid()- o.getPid();//按照Pid属性排序
+        return i;
     }
 }

@@ -31,9 +31,11 @@ public class MoveWT {
         double maxdis = 0;
         int index = 0;
         Distance distance = new Distance();
+        System.out.print("当前轨迹段：start = "+start+" end = "+end);
+        if(start >= end) return;
         for(int i=start;i<end-size;i++){
           for(int j=i+1;j<i+1+size;j++){
-              double curdis = distance.CalculatedDis(beforeTraj.get(i),
+              double curdis = distance.getDistance(beforeTraj.get(i),
                       beforeTraj.get(i+1+size),beforeTraj.get(j));
               if(maxdis < curdis){
                   maxdis = curdis;
@@ -41,22 +43,22 @@ public class MoveWT {
               }
           }
         }
-        System.out.println("maxdis = "+maxdis);
+        System.out.println(" maxdis = "+maxdis+" index = "+index);
         if(maxdis > LimitDis){
             afterTraj.add(beforeTraj.get(index));
-            MoveWTAlgorithm(beforeTraj,start,index-1,size);
-            MoveWTAlgorithm(beforeTraj,index+1,end,size);
+            MoveWTAlgorithm(beforeTraj,start,index,size);
+            MoveWTAlgorithm(beforeTraj,index,end,size);
         }
     }
 
     public static void main(String[] args) throws Exception {
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
-        LimitDis = (float) 0.0000001;
+        LimitDis = (float) 0.000000005;
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
         beforeTraj =getData.getDataFromFile(file,"1");
-        MoveWTAlgorithm(beforeTraj,0,beforeTraj.size()-1,6);
+        MoveWTAlgorithm(beforeTraj,0,beforeTraj.size()-1,4);
         System.out.println("压缩后轨迹点数："+afterTraj.size());
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);

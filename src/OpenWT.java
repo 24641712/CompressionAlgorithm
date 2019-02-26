@@ -34,7 +34,8 @@ public class OpenWT {
         while(true) {
             boolean flag = false;
             for(Point point : listPoint) {
-                double disOfTwo = distance.getDistance(sourceList.get(startPoint),sourceList.get(floatPoint),point);
+                double disOfTwo = distance.getDistance(sourceList.get(startPoint),
+                        sourceList.get(floatPoint),point);
                 System.out.println("disOfTwo="+disOfTwo);
                 if(disOfTwo >= 1.190){
                     flag = true;
