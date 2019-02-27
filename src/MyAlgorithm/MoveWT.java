@@ -17,6 +17,36 @@ import java.util.ArrayList;
 public class MoveWT {
     static ArrayList<Point> afterTraj = new ArrayList<Point>();
     static float LimitDis;
+    static Distance distance = new Distance();
+
+    /*
+     *轨迹段长度小于移动窗口时，使用阈值
+     *求轨迹点。
+     *@param beforeTraj 源轨迹
+     *@param start 起始点
+     *@param end 终止点
+     *@return void
+     **/
+    protected void dpAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
+        Point pa = beforeTraj.get(start);
+        Point pb = beforeTraj.get(end);
+        double maxdis = 0.0;
+        int index = 0;
+         for(int i=start+1;i<end;i++){
+             Point pc = beforeTraj.get(i);
+             double temp = distance.CalculatedDis(pa,pb,pc);
+             if(temp > maxdis){
+                 maxdis = temp;
+                 index = i;
+             }
+         }
+         if(maxdis > LimitDis){
+             afterTraj.add(beforeTraj.get(index));
+             dpAlgorithm(beforeTraj,start,index);
+             dpAlgorithm(beforeTraj,index,end);
+         }
+    }
+
 
     /*
      *
@@ -30,7 +60,7 @@ public class MoveWT {
                               int start,int end,int size){
         double maxdis = 0;
         int index = 0;
-        Distance distance = new Distance();
+
         System.out.print("当前轨迹段：start = "+start+" end = "+end);
         if(start >= end) return;
         for(int i=start;i<end-size;i++){

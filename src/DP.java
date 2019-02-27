@@ -35,16 +35,19 @@ public class DP {
      *@param p2 终止点
      *@return void
      **/
-    static void DPAlgorithm(ArrayList<Point> list,int p1,int p2){
+    static void DPAlgorithm(ArrayList<Point> beforeTraj,int p1,int p2){
         double a,b,c,cosA,cosB,sinA,maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
         System.out.println("p1="+p1+"  p2="+p2);
+        Point pa = beforeTraj.get(p1);
+        Point pb = beforeTraj.get(p2);
         if(p2-p1 >= 2){
             maxdis = 0;
             i=p1+1;
             while(i < p2){
-                curdis = distance.CalculatedDis(list.get(p1),list.get(p2),list.get(i));
+                Point pc = beforeTraj.get(i);
+                curdis = distance.CalculatedDis(pa,pb,pc);
                 if(maxdis <= curdis)   {
                     maxdis = curdis;
                     maxNO = i;
@@ -53,13 +56,13 @@ public class DP {
             }//end while
             System.out.println("maxdis="+maxdis+" curList="+maxNO);
             if(maxdis >= LimitDis) {
-                targetList.add(list.get(maxNO));
+                targetList.add(beforeTraj.get(maxNO));
                 System.out.println("targetList"+maxNO);
-                DPAlgorithm(list,p1,maxNO);
-                DPAlgorithm(list,maxNO,p2);
+                DPAlgorithm(beforeTraj,p1,maxNO);
+                DPAlgorithm(beforeTraj,maxNO,p2);
             }
             else {
-                Delpt(list,p1,p2);
+                Delpt(beforeTraj,p1,p2);
                 delTotal++;
                 System.out.println("Delpt: p1="+p1+" p2="+p2+"  删除"+(p2-p1)+"个轨迹点");
             }
