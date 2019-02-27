@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 /**
  * 用一个固定大小的窗口通过移动确定特征点
- * 来压缩轨迹。
+ * 来压缩轨迹,当轨迹段小于窗口大小时使用dp
+ * 算法压缩。
  * @Author ccl
  * @Date 2019/2/24
  */
@@ -32,6 +33,7 @@ public class MoveWT {
         Point pb = beforeTraj.get(end);
         double maxdis = 0.0;
         int index = 0;
+        if(start >= end-1)return ;
          for(int i=start+1;i<end;i++){
              Point pc = beforeTraj.get(i);
              double temp = distance.CalculatedDis(pa,pb,pc);
