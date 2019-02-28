@@ -48,7 +48,7 @@ public class DP {
             while(i < p2){
                 Point pc = beforeTraj.get(i);
                 curdis = distance.CalculatedDis(pa,pb,pc);
-                if(maxdis <= curdis)   {
+                if(maxdis < curdis)   {
                     maxdis = curdis;
                     maxNO = i;
                 }

@@ -28,7 +28,7 @@ public class MoveWT {
      *@param end 终止点
      *@return void
      **/
-    protected void dpAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
+    protected static void dpAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
         Point pa = beforeTraj.get(start);
         Point pb = beforeTraj.get(end);
         double maxdis = 0.0;
@@ -59,28 +59,32 @@ public class MoveWT {
      *@return void
      **/
     public static void MoveWTAlgorithm(ArrayList<Point> beforeTraj,
-                              int start,int end,int size){
+                              int start,int end,int size) {
         double maxdis = 0;
         int index = 0;
 
-        System.out.print("当前轨迹段：start = "+start+" end = "+end);
-        if(start >= end) return;
-        for(int i=start;i<end-size;i++){
-          for(int j=i+1;j<i+1+size;j++){
-              double curdis = distance.getDistance(beforeTraj.get(i),
-                      beforeTraj.get(i+1+size),beforeTraj.get(j));
-              if(maxdis < curdis){
-                  maxdis = curdis;
-                  index = j;
-              }
-          }
+        System.out.print("当前轨迹段：start = " + start + " end = " + end);
+        if (start >= end) return;
+        if (end - start < size) {
+            dpAlgorithm(beforeTraj, start, end);
+        }else{
+        for (int i = start; i < end - size; i++) {
+            for (int j = i + 1; j < i + 1 + size; j++) {
+                double curdis = distance.getDistance(beforeTraj.get(i),
+                        beforeTraj.get(i + 1 + size), beforeTraj.get(j));
+                if (maxdis < curdis) {
+                    maxdis = curdis;
+                    index = j;
+                }
+            }
         }
-        System.out.println(" maxdis = "+maxdis+" index = "+index);
-        if(maxdis > LimitDis){
+        System.out.println(" maxdis = " + maxdis + " index = " + index);
+        if (maxdis > LimitDis) {
             afterTraj.add(beforeTraj.get(index));
-            MoveWTAlgorithm(beforeTraj,start,index,size);
-            MoveWTAlgorithm(beforeTraj,index,end,size);
+            MoveWTAlgorithm(beforeTraj, start, index, size);
+            MoveWTAlgorithm(beforeTraj, index, end, size);
         }
+    }
     }
 
     public static void main(String[] args) throws Exception {

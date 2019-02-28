@@ -34,15 +34,16 @@ public class Estimate {
     public void CompressionError(ArrayList<Point> beforeTraj,
                                  ArrayList<Point> afterTraj){
         double total = 0;
+        double temp;
         Distance distance = new Distance();
-        Collections.sort(afterTraj);
+        Collections.sort(afterTraj);//使压缩后的轨迹按Pid有序排列
       for(int i=0;i<afterTraj.size()-1;i++){
 //        int i=96;
           Point pa = afterTraj.get(i);
           Point pb = afterTraj.get(i+1);
           for(int j = pa.getPid()+1;j<pb.getPid();j++){
               Point pc = beforeTraj.get(j);
-              double temp = distance.CalculatedDis(pa,pb,pc);
+              temp = distance.CalculatedDis(pa,pb,pc);
               if(-100 <temp&&temp < 1000){
                   total += temp;
               }else {
