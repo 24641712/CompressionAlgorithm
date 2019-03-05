@@ -37,7 +37,7 @@ public class FixedWT {
         if(start >= end-1)return ;
         for(int i=start+1;i<end;i++){
             Point pc = beforeTraj.get(i);
-            double temp = distance.CalculatedDis(pa,pb,pc);
+            double temp = distance.getDistance(pa,pb,pc);
             if(temp > maxdis){
                 maxdis = temp;
                 index = i;
@@ -78,7 +78,7 @@ public class FixedWT {
         ArrayList<Point> beforeTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
-        dpLimitDis = 0.000025;
+        dpLimitDis = 2.500025;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
         beforeTraj = getData.getDataFromFile(file,"1");
         FixedWTAlgorithm(beforeTraj,15);

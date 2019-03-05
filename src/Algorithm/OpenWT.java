@@ -1,3 +1,5 @@
+package Algorithm;
+
 import entity.Point;
 import estimate.Estimate;
 import utils.Distance;

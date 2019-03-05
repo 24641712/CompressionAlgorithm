@@ -2,6 +2,8 @@ package utils;
 
 import entity.Point;
 
+import java.util.Date;
+
 /**
  * 工具类计算轨迹的垂直距离
  * @Author ccl
@@ -16,17 +18,17 @@ public class Distance {
      *@return 两个轨迹点间的距离
      **/
     protected double p2pdis(Point pa,Point pb) {
-        double d;
-        d=(float)Math.sqrt(
+        double distance;
+        distance = (float)Math.sqrt(
                 (pa.getLatitude()-pb.getLatitude())*
                         (pa.getLatitude()-pb.getLatitude())+
                         (pa.getLongitude()-pb.getLongitude())*
                                 (pa.getLongitude()-pb.getLongitude()));
-        return d;
+        return distance;
     }
 
     /*
-     *计算点的垂直距离
+     *利用正弦值计算点的垂直距离
      *@param pa 轨迹点
      *@param pb 轨迹点
      *@param pc 轨迹点
@@ -56,7 +58,6 @@ public class Distance {
     }
 
     /*
-     *
      *@param d 计算度
      *@return
      **/
@@ -84,7 +85,7 @@ public class Distance {
     }
 
     /*
-     *
+     *使用面积公式计算垂直距离
      *@param A 轨迹点
      *@param B 轨迹点
      *@param C 轨迹点
@@ -100,4 +101,30 @@ public class Distance {
         distance = s * 2.0 / a; //求出距离
         return distance;
     }
+
+    /*
+     *计算同步欧式距离
+     *通过三个轨迹点的时间来计算同步欧式距离
+     *@param A 起始轨迹点
+     *@param B 终止轨迹点
+     *@param C 当前轨迹点
+     *@return 同步欧式距离值
+     **/
+    public double getSedDist(Point A,Point B,Point C){
+        Date timeA = new GetTime(A.getDate(),A.getTime()).getDate();
+        Date timeB = new GetTime(B.getDate(),B.getTime()).getDate();
+        Date timeC = new GetTime(C.getDate(),C.getTime()).getDate();
+        double percent = (timeC.getTime()-timeA.getTime())
+                /(timeB.getTime()-timeA.getTime());
+        double latitude = A.getLatitude()+
+                (B.getLatitude()-A.getLatitude())*percent;
+        double longitude = A.getLongitude()+
+                (B.getLongitude()-A.getLongitude())*percent;
+        Point point = new Point();
+        point.setLatitude(latitude);
+        point.setLongitude(longitude);
+        double distance = p2pdis(point,C);
+        return distance;
+    }
+
 }

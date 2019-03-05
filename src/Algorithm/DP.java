@@ -1,3 +1,5 @@
+package Algorithm;
+
 import entity.Point;
 import estimate.Estimate;
 import utils.Distance;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 public class DP {
     static int iNum;
     static double LimitDis;
-    private static ArrayList<Point> targetList = new ArrayList<Point>();
+    private static ArrayList<Point> afterTraj = new ArrayList<Point>();
     private static int delTotal=0;
 
     //删除轨迹点
@@ -29,25 +31,25 @@ public class DP {
     }
 
     /*
-     *道格拉斯-普克算法（DP）算法
+     *道格拉斯-普克算法（Algorithm.DP）算法
      *@param list 源轨迹集合
      *@param p1 起始点
      *@param p2 终止点
      *@return void
      **/
-    static void DPAlgorithm(ArrayList<Point> beforeTraj,int p1,int p2){
+    static void DPAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
         double a,b,c,cosA,cosB,sinA,maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
-        System.out.println("p1="+p1+"  p2="+p2);
-        Point pa = beforeTraj.get(p1);
-        Point pb = beforeTraj.get(p2);
-        if(p2-p1 >= 2){
+        System.out.println("p1="+start+"  p2="+end);
+        Point pa = beforeTraj.get(start);
+        Point pb = beforeTraj.get(end);
+        if(end-start >= 2){
             maxdis = 0;
-            i=p1+1;
-            while(i < p2){
+            i=start+1;
+            while(i < end){
                 Point pc = beforeTraj.get(i);
-                curdis = distance.CalculatedDis(pa,pb,pc);
+                curdis = distance.getDistance(pa,pb,pc);
                 if(maxdis < curdis)   {
                     maxdis = curdis;
                     maxNO = i;
@@ -56,15 +58,15 @@ public class DP {
             }//end while
             System.out.println("maxdis="+maxdis+" curList="+maxNO);
             if(maxdis >= LimitDis) {
-                targetList.add(beforeTraj.get(maxNO));
-                System.out.println("targetList"+maxNO);
-                DPAlgorithm(beforeTraj,p1,maxNO);
-                DPAlgorithm(beforeTraj,maxNO,p2);
+                afterTraj.add(beforeTraj.get(maxNO));
+                System.out.println("添加点："+maxNO);
+                DPAlgorithm(beforeTraj,start,maxNO);
+                DPAlgorithm(beforeTraj,maxNO,end);
             }
             else {
-                Delpt(beforeTraj,p1,p2);
+                Delpt(beforeTraj,start,end);
                 delTotal++;
-                System.out.println("Delpt: p1="+p1+" p2="+p2+"  删除"+(p2-p1)+"个轨迹点");
+                System.out.println("Delpt: p1="+start+" p2="+end+"  删除"+(end-start)+"个轨迹点");
             }
         }
     }
@@ -78,15 +80,14 @@ public class DP {
         GetDataFromFile getData = new GetDataFromFile();
         //获取数据
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
-        LimitDis = (float) 0.0000298;
+        LimitDis = (float) 2.9000298;
         beforeTraj =getData.getDataFromFile(file,"1");
 
         DPAlgorithm(beforeTraj,0,beforeTraj.size()-1);
         System.out.println(beforeTraj.size());
-        System.out.println(targetList.size()+"   删除"+delTotal+"个轨迹点");
-//        getData.writeDataTomysql(points); //持久化
-        estimate.CompressionRatio(beforeTraj.size(),targetList.size());
-        estimate.CompressionError(beforeTraj,targetList);
+        System.out.println(afterTraj.size()+"   删除"+delTotal+"个轨迹点");
+        estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
+        estimate.CompressionError(beforeTraj,afterTraj);
     }
 
 }

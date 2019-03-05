@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Date;
+
 /**
  * 轨迹点
  * @author ccl
