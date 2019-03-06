@@ -22,7 +22,7 @@ public class Estimate {
     public void CompressionRatio(int before,int after){
         double cpL = ((double)after / (double)before)* 100;
         DecimalFormat df = new DecimalFormat("0.000000");
-        System.out.println("压缩率为："+ df.format(cpL) + "%");
+        System.out.println("压缩率："+ df.format(cpL) + "%");
     }
 
     /*
@@ -51,7 +51,7 @@ public class Estimate {
                }
            }
        }
-         System.out.println("平均距离误差为："+sumDist/beforeTraj.size());
+         System.out.println("平均距离误差："+sumDist/beforeTraj.size());
     }
 
 }

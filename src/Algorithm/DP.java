@@ -41,7 +41,7 @@ public class DP {
         double a,b,c,cosA,cosB,sinA,maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
-        System.out.println("p1="+start+"  p2="+end);
+        System.out.println("start="+start+"  end="+end);
         Point pa = beforeTraj.get(start);
         Point pb = beforeTraj.get(end);
         if(end-start >= 2){
@@ -73,19 +73,18 @@ public class DP {
 
     //主函数
     public static void main(String[] args) throws Exception {
-
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> points = new ArrayList<>();
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
-        //获取数据
-        File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
         LimitDis = (float) 2.9000298;
+        //获取数据
+        String path = "F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt";
+        File file = new File(path);
         beforeTraj =getData.getDataFromFile(file,"1");
-
         DPAlgorithm(beforeTraj,0,beforeTraj.size()-1);
-        System.out.println(beforeTraj.size());
-        System.out.println(afterTraj.size()+"   删除"+delTotal+"个轨迹点");
+        System.out.println("压缩前轨迹点数："+beforeTraj.size());
+        System.out.println("压缩后轨迹点数："+afterTraj.size());
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
     }
