@@ -21,7 +21,7 @@ public class OPW_TR {
      *@param maxdis 阈值
      *@return 压缩后轨迹
      **/
-    public static ArrayList<Point> openWindowAlgorithm (
+    public static ArrayList<Point> openWindow_TRAlgorithm (
                   ArrayList<Point> beforeTraj, double maxdis) {
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         int startPoint = 0;
@@ -84,7 +84,7 @@ public class OPW_TR {
         beforeTraj = getData.getDataFromFile(file,"1");
         System.out.println(beforeTraj.size());
         //压缩算法
-        afterTraj = openWindowAlgorithm(beforeTraj,maxDist);
+        afterTraj = openWindow_TRAlgorithm(beforeTraj,maxDist);
         System.out.println("压缩后的轨迹数："+afterTraj.size());
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
