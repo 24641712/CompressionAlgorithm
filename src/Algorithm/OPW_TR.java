@@ -90,5 +90,4 @@ public class OPW_TR {
         estimate.CompressionError(beforeTraj,afterTraj);
     }
 
-
 }

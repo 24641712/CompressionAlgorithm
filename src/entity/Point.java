@@ -24,6 +24,8 @@ public class Point implements Comparable<Point> {
 
     private char Res='T';  //是否是被删除轨迹点
 
+    private double priority;
+
     public String getUid() {
         return uid;
     }
@@ -86,6 +88,14 @@ public class Point implements Comparable<Point> {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public double getPriority() {
+        return priority;
+    }
+
+    public void setPriority(double priority) {
+        this.priority = priority;
     }
 
     @Override
