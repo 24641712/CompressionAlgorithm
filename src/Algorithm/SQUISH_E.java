@@ -1,6 +1,7 @@
 package Algorithm;
 
 import entity.Point;
+import estimate.Estimate;
 import utils.Distance;
 import utils.GetDataFromFile;
 
@@ -15,7 +16,7 @@ import java.util.HashMap;
  */
 public class SQUISH_E {
 
-    public static  void SQUISH_EAlgorithm(ArrayList<Point> beforeTraj
+    public static  ArrayList<Point> SQUISH_EAlgorithm(ArrayList<Point> beforeTraj
                            ,double ratio,double maxdis){
         ArrayList<Point> afterTraj = new ArrayList<>();
         int []value = new int[1024];
@@ -36,6 +37,7 @@ public class SQUISH_E {
             reduce(afterTraj);
             priority = min_priority(afterTraj);
         }
+        return afterTraj;
     }
 
     /*
@@ -60,7 +62,6 @@ public class SQUISH_E {
     }
 
     /*
-     *
      *@param index 有调整优先级的节点
      *@param afterTraj 优先级队列
      *@return void
@@ -100,12 +101,15 @@ public class SQUISH_E {
      **/
     public static void main(String[] args) throws Exception {
         ArrayList<Point> beforeTraj = new ArrayList<>();
+        ArrayList<Point> afterTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
+        Estimate estimate = new Estimate();
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
         beforeTraj = getData.getDataFromFile(file,"1");
-
-
-
-
+        SQUISH_EAlgorithm(beforeTraj,0.4,0.001);
+        System.out.println("压缩前的轨迹点数："+beforeTraj.size());
+        System.out.println("压缩后的轨迹点数："+afterTraj.size());
+        estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
+        estimate.CompressionError(beforeTraj,afterTraj);
     }
 }
