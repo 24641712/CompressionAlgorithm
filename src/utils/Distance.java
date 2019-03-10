@@ -5,7 +5,7 @@ import entity.Point;
 import java.util.Date;
 
 /**
- * 工具类计算轨迹的垂直距离
+ * 工具类计算轨迹的垂直距离和同步欧式距离
  * @Author ccl
  * @Date 2019/2/24
  */
@@ -58,8 +58,9 @@ public class Distance {
     }
 
     /*
-     *@param d 计算度
-     *@return
+     *函数功能：角度转弧度
+     *@param d:角度
+     *@return 返回的是弧度
      **/
     protected  double Rad(double d){
         return d * Math.PI / 180.0;
@@ -67,9 +68,9 @@ public class Distance {
 
     /*
      *计算两个轨迹点间的距离
-     *@param pA 轨迹点
-     *@param pB 轨迹点
-     *@return 两点间的距离
+     *@param pA 起始点
+     *@param pB 结束点
+     *@return 距离
      **/
     protected  double geoDist(Point pA,Point pB){
         double radLat1 =  Rad(pA.getLatitude());
@@ -86,10 +87,10 @@ public class Distance {
 
     /*
      *使用面积公式计算垂直距离
-     *@param A 轨迹点
-     *@param B 轨迹点
-     *@param C 轨迹点
-     *@return 距离
+     *@param A 起始点
+     *@param B 结束点
+     *@param C 当前点
+     *@return 点C到A和B所在直线的距离
      **/
     public double getDistance(Point A,Point B,Point C){
         double distance = 0;
@@ -103,11 +104,10 @@ public class Distance {
     }
 
     /*
-     *计算同步欧式距离
-     *通过三个轨迹点的时间来计算同步欧式距离
-     *@param A 起始轨迹点
-     *@param B 终止轨迹点
-     *@param C 当前轨迹点
+     *计算C到A和B所在直线的同步欧氏距离
+     *@param A 起始点
+     *@param B 结束点
+     *@param C 当前点
      *@return 同步欧式距离值
      **/
     public double getSedDist(Point A,Point B,Point C){
