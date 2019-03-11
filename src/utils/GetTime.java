@@ -1,36 +1,27 @@
 package utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
- *工具类用来对时间进行操作
+ * 计算程序耗时
  * @Author ccl
- * @Date 2019/3/5
+ * @Date 2019/3/11
  */
 public class GetTime {
-    private Date date;
+    private long startTime;
 
-    public GetTime(String date, String time) {
-        SimpleDateFormat sdfd =new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
-        try {
-            this.date = sdfd.parse(date+" "+time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    private long endTime;
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getDate() {
-        return date;
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
-    public void setDate(String date, String time) {
-        SimpleDateFormat sdfd =new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
-        try {
-            this.date = sdfd.parse(date+" "+time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public void showTime(){
+        System.out.println("程序执行耗时："+(this.endTime-this.startTime)+"毫秒");
     }
+
+
+
 }

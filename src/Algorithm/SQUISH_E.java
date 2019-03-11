@@ -4,6 +4,7 @@ import entity.Point;
 import estimate.Estimate;
 import utils.Distance;
 import utils.GetDataFromFile;
+import utils.GetTime;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,27 +16,35 @@ import java.util.HashMap;
  * @Date 2019/3/5
  */
 public class SQUISH_E {
+    static double maxdis;
 
     public static  ArrayList<Point> SQUISH_EAlgorithm(ArrayList<Point> beforeTraj
                            ,double ratio,double maxdis){
         ArrayList<Point> afterTraj = new ArrayList<>();
         int []value = new int[1024];
-        int capacity = 4;
+        int capacity = 4;//设置优先级队列的初始容量
         for(int i=0;i<beforeTraj.size();i++){
-            if(i > capacity*ratio)capacity++;//增加优先队列的容量
+            if(i/ratio > capacity)capacity++;//增加优先队列的容量
             beforeTraj.get(i).setPriority(0);
             afterTraj.add(beforeTraj.get(i));
+            //新加入点不是第一个点，调整其前一个点的优先级
             if(i>1){
-                adjust_priority(i-1,afterTraj);//调整优先级队列中的优先级
+                //调整优先级队列中的优先级
+                adjust_priority(i-1,afterTraj);
             }
+            //优先队列满则删除优先级最低的点
             if(afterTraj.size() == capacity){
                 reduce(afterTraj);
             }
         }
+        System.out.println("优先队列的容量是："+capacity);
         double priority = min_priority(afterTraj);
+        System.out.println("优先级是："+priority);
+        //删除优先级小于阈值的轨迹点
         while(priority < maxdis){
             reduce(afterTraj);
             priority = min_priority(afterTraj);
+            System.out.println("优先级是："+priority);
         }
         return afterTraj;
     }
@@ -83,15 +92,15 @@ public class SQUISH_E {
      *@return 最低优先级
      **/
     public static double min_priority(ArrayList<Point> afterTraj){
-        double priority = Double.MAX_VALUE;
+        double minpriority = Double.MAX_VALUE;
         double temp = 0;
-        for(int i=0;i<afterTraj.size();i++) {
+        for(int i=1;i<afterTraj.size()-1;i++) {
             temp = afterTraj.get(i).getPriority();
-            if (priority > temp) {
-                priority = temp;
+            if (minpriority > temp) {
+                minpriority = temp;
             }
         }
-        return priority;
+        return minpriority;
     }
 
     /*
@@ -104,11 +113,16 @@ public class SQUISH_E {
         ArrayList<Point> afterTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
+        GetTime getTime = new GetTime();
+        maxdis = 0.000156;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
         beforeTraj = getData.getDataFromFile(file,"1");
-        SQUISH_EAlgorithm(beforeTraj,0.4,0.001);
+        getTime.setStartTime(System.currentTimeMillis());
+        afterTraj = SQUISH_EAlgorithm(beforeTraj,0.4,maxdis);
+        getTime.setEndTime(System.currentTimeMillis());
         System.out.println("压缩前的轨迹点数："+beforeTraj.size());
         System.out.println("压缩后的轨迹点数："+afterTraj.size());
+        getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
     }

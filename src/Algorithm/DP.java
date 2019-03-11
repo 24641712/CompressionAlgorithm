@@ -4,6 +4,7 @@ import entity.Point;
 import estimate.Estimate;
 import utils.Distance;
 import utils.GetDataFromFile;
+import utils.GetTime;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,7 +42,7 @@ public class DP {
         double a,b,c,cosA,cosB,sinA,maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
-        System.out.println("start="+start+"  end="+end);
+        System.out.print("start="+start+"  end="+end);
         Point pa = beforeTraj.get(start);
         Point pb = beforeTraj.get(end);
         if(end-start >= 2){
@@ -56,18 +57,21 @@ public class DP {
                 }
                 i++;
             }//end while
-            System.out.println("maxdis="+maxdis+" curList="+maxNO);
+           // System.out.println("maxdis="+maxdis+" curList="+maxNO);
             if(maxdis >= LimitDis) {
                 afterTraj.add(beforeTraj.get(maxNO));
-                System.out.println("添加点："+maxNO);
+                System.out.println("   添加点："+maxNO);
                 DPAlgorithm(beforeTraj,start,maxNO);
                 DPAlgorithm(beforeTraj,maxNO,end);
             }
             else {
                 Delpt(beforeTraj,start,end);
                 delTotal++;
-                System.out.println("Delpt: p1="+start+" p2="+end+"  删除"+(end-start)+"个轨迹点");
+                System.out.println();
+                //System.out.println("Delpt: p1="+start+" p2="+end+"  删除"+(end-start)+"个轨迹点");
             }
+        }else{
+            System.out.println();
         }
     }
 
@@ -77,14 +81,18 @@ public class DP {
         ArrayList<Point> points = new ArrayList<>();
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
+        GetTime getTime = new GetTime();
         LimitDis = (float) 2.9000298;
         //获取数据
         String path = "F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt";
         File file = new File(path);
         beforeTraj =getData.getDataFromFile(file,"1");
+        getTime.setStartTime(System.currentTimeMillis());
         DPAlgorithm(beforeTraj,0,beforeTraj.size()-1);
+        getTime.setEndTime(System.currentTimeMillis());
         System.out.println("压缩前轨迹点数："+beforeTraj.size());
         System.out.println("压缩后轨迹点数："+afterTraj.size());
+        getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
     }

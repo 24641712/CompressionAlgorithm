@@ -4,6 +4,7 @@ import entity.Point;
 import estimate.Estimate;
 import utils.Distance;
 import utils.GetDataFromFile;
+import utils.GetTime;
 
 import java.io.File;
 import java.io.RandomAccessFile;
@@ -69,18 +70,21 @@ public class OPW {
     }
 
     public static void main(String[] args) throws Exception{
-        double maxDistanceError = 30;
+        double maxDistError = 30;
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> afterTraj = new ArrayList<Point>();
-        ArrayList<Point> points=new ArrayList<Point>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
+        GetTime getTime = new GetTime();
         String path = "F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt";
         File file = new File(path);
         beforeTraj = getData.getDataFromFile(file,"1");
-        afterTraj = openWindowAlgorithm(beforeTraj,maxDistanceError);
+        getTime.setStartTime(System.currentTimeMillis());
+        afterTraj = openWindowAlgorithm(beforeTraj,maxDistError);
+        getTime.setEndTime(System.currentTimeMillis());
         System.out.println("压缩前轨迹点数："+beforeTraj.size());
         System.out.println("压缩后的轨迹数："+afterTraj.size());
+        getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
     }

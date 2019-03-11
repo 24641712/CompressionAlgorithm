@@ -4,6 +4,7 @@ import entity.Point;
 import estimate.Estimate;
 import utils.Distance;
 import utils.GetDataFromFile;
+import utils.GetTime;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -84,12 +85,16 @@ public class TD_TR {
         ArrayList<Point> beforeTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
+        GetTime getTime = new GetTime();
         LimitDis = 0.0047;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
         beforeTraj = getData.getDataFromFile(file,"1");
+        getTime.setStartTime(System.currentTimeMillis());
         TD_TRAlgorithm(beforeTraj,0,beforeTraj.size()-1);
+        getTime.setEndTime(System.currentTimeMillis());
         System.out.println("压缩前轨迹点数："+beforeTraj.size());
         System.out.println("压缩后轨迹点数："+afterTraj.size());
+        getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
     }

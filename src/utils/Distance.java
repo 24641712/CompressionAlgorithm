@@ -111,9 +111,9 @@ public class Distance {
      *@return 同步欧式距离值
      **/
     public double getSedDist(Point A,Point B,Point C){
-        Date timeA = new GetTime(A.getDate(),A.getTime()).getDate();
-        Date timeB = new GetTime(B.getDate(),B.getTime()).getDate();
-        Date timeC = new GetTime(C.getDate(),C.getTime()).getDate();
+        Date timeA = new GetDate(A.getDate(),A.getTime()).getDate();
+        Date timeB = new GetDate(B.getDate(),B.getTime()).getDate();
+        Date timeC = new GetDate(C.getDate(),C.getTime()).getDate();
         double percent = (timeC.getTime()-timeA.getTime())
                 /(timeB.getTime()-timeA.getTime());
         double latitude = A.getLatitude()+

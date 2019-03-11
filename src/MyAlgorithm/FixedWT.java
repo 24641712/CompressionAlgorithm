@@ -4,6 +4,7 @@ import entity.Point;
 import estimate.Estimate;
 import utils.Distance;
 import utils.GetDataFromFile;
+import utils.GetTime;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class FixedWT {
         Distance distance = new Distance();
         double maxdis = 0;
         int index = 0;
+        System.out.println("start="+start+" end="+end);
         if(start >= end-1)return ;
         for(int i=start+1;i<end;i++){
             Point pc = beforeTraj.get(i);
@@ -45,7 +47,7 @@ public class FixedWT {
         }
         System.out.println("dpmaxdis = " + maxdis + " index = " + index);
         if(maxdis > dpLimitDis){
-            System.out.println("dpmaxdis = " + maxdis + " index = " + index);
+            System.out.println("Add dpmaxdis = " + maxdis + " index = " + index);
             afterTraj.add(beforeTraj.get(index));
             dpAlgorithm(beforeTraj,start,index);
             dpAlgorithm(beforeTraj,index,end);
@@ -59,13 +61,22 @@ public class FixedWT {
      *@return void
      **/
     public static void FixedWTAlgorithm(ArrayList<Point> beforeTraj,int size){
-        int number = (int)(beforeTraj.size()/size);
-        for(int i=0;i<number;i++){
-            int start = i*size;
-            int end = (i+1)*size;
+        int number = beforeTraj.size();
+        int start=1;
+        int end = start + size;
+        int remember = start;
+        while(end <= number-1){
             dpAlgorithm(beforeTraj,start,end);
+            int index = afterTraj.size();
+            start = afterTraj.get(index-1).getPid();
+            end = start + size;
+            if(remember == start){
+                start = end;
+                end = start + size;
+            }
+            remember = start;
         }
-        dpAlgorithm(beforeTraj,number*size,beforeTraj.size()-1);
+        dpAlgorithm(beforeTraj,start,beforeTraj.size()-1);
 
     }
 
@@ -78,10 +89,16 @@ public class FixedWT {
         ArrayList<Point> beforeTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
-        dpLimitDis = 2.500025;
+        GetTime getTime = new GetTime();
+        dpLimitDis = 3.400025;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
         beforeTraj = getData.getDataFromFile(file,"1");
-        FixedWTAlgorithm(beforeTraj,15);
+        getTime.setStartTime(System.currentTimeMillis());
+        FixedWTAlgorithm(beforeTraj,35);
+        getTime.setEndTime(System.currentTimeMillis());
+        System.out.println("压缩前轨迹点数："+beforeTraj.size());
+        System.out.println("压缩后轨迹点数："+afterTraj.size());
+        getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
     }
