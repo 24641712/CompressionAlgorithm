@@ -46,7 +46,7 @@ public class TD_TR {
                 }
                 i++;
             }//end while
-            System.out.println("maxdis="+maxdis+" curList="+maxNO);
+//            System.out.println("maxdis="+maxdis+" curList="+maxNO);
             if(maxdis > LimitDis) {
                 afterTraj.add(beforeTraj.get(maxNO));
 //                System.out.println("targetList:"+maxNO);
@@ -56,7 +56,7 @@ public class TD_TR {
             else {
                 Delpt(beforeTraj,start,end);
                 delTotal++;
-                System.out.println("Delpt: p1="+start+" p2="+end+"  删除"+(end-start)+"个轨迹点");
+//                System.out.println("Delpt: p1="+start+" p2="+end+"  删除"+(end-start)+"个轨迹点");
             }
         }
     }
@@ -81,19 +81,17 @@ public class TD_TR {
      *@param args 参数
      *@return void
      **/
-    public static void main(String[] args) throws Exception {
+    public static void main(String []args) throws Exception {
         ArrayList<Point> beforeTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
         LimitDis = 0.0047;
-        File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
-        beforeTraj = getData.getDataFromFile(file,"1");
+        beforeTraj = getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         TD_TRAlgorithm(beforeTraj,0,beforeTraj.size()-1);
         getTime.setEndTime(System.currentTimeMillis());
-        System.out.println("压缩前轨迹点数："+beforeTraj.size());
-        System.out.println("压缩后轨迹点数："+afterTraj.size());
+        System.out.println("TD-TR算法");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);

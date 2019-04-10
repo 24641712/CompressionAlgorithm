@@ -90,7 +90,7 @@ public class QueueAngle {
         GetDataFromFile getData = new GetDataFromFile();
         limitAngle = (float) -0.9836571;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
-        beforeTraj = getData.getDataFromFile(file,"1");
+        beforeTraj = getData.getDataFromFile(10,"1");
         System.out.println(beforeTraj.size());
         targetList = runAngle(beforeTraj, 0, beforeTraj.size()-1);
 //		getData.writeDataTomysql(points);

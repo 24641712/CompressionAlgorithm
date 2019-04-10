@@ -91,7 +91,7 @@ public class CompAngle {
         limitAngle = (float) -0.9969571;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\1.plt");
         ArrayList<Point> beforeTraj=new ArrayList<Point>();
-        beforeTraj = getData.getDataFromFile(file,"1");
+        beforeTraj = getData.getDataFromFile(10,"1");
         System.out.println(beforeTraj.size());
         comp = 1-(float)(Double.parseDouble(scanner.next())/100.0);
         limitAngle = beforeTraj.size()/(comp*beforeTraj.size());

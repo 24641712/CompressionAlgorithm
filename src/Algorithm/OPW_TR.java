@@ -44,7 +44,7 @@ public class OPW_TR {
                     break;
                 }
             }
-            System.out.println("disOfTwo="+disOfTwo);
+//            System.out.println("disOfTwo="+disOfTwo);
             if (flag) {
                 afterTraj.add(beforeTraj.get(startPoint));
                 startPoint = floatPoint-1;
@@ -74,21 +74,20 @@ public class OPW_TR {
      *@param args 参数
      *@return void
      **/
-    public static void main(String[] args) throws Exception{
+    public static void main(String []args) throws Exception{
         double maxDist = 0.00012;
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
-        String path = "F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt";
-        File file = new File(path);
         GetDataFromFile getData = new GetDataFromFile();
-        beforeTraj = getData.getDataFromFile(file,"1");
+        beforeTraj = getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         afterTraj = openWindow_TRAlgorithm(beforeTraj,maxDist);
         getTime.setEndTime(System.currentTimeMillis());
-        System.out.println("压缩前轨迹点数："+beforeTraj.size());
-        System.out.println("压缩后轨迹点数："+afterTraj.size());
+//        System.out.println("压缩前轨迹点数："+beforeTraj.size());
+//        System.out.println("压缩后轨迹点数："+afterTraj.size());
+        System.out.println("OPW-TR算法");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);

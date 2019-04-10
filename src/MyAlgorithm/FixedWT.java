@@ -35,7 +35,6 @@ public class FixedWT {
         Distance distance = new Distance();
         double maxdis = 0;
         int index = 0;
-        System.out.println("start="+start+" end="+end);
         if(start >= end-1)return ;
         for(int i=start+1;i<end;i++){
             Point pc = beforeTraj.get(i);
@@ -45,9 +44,8 @@ public class FixedWT {
                 index = i;
             }
         }
-        System.out.println("dpmaxdis = " + maxdis + " index = " + index);
+        System.out.println("maxdis:"+maxdis);
         if(maxdis > dpLimitDis){
-            System.out.println("Add dpmaxdis = " + maxdis + " index = " + index);
             afterTraj.add(beforeTraj.get(index));
             dpAlgorithm(beforeTraj,start,index);
             dpAlgorithm(beforeTraj,index,end);
@@ -85,19 +83,17 @@ public class FixedWT {
      *@param args
      *@return void
      **/
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] paths) throws Exception {
         ArrayList<Point> beforeTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
-        dpLimitDis = 3.400025;
-        File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
-        beforeTraj = getData.getDataFromFile(file,"1");
+        dpLimitDis = 0.124;
+        beforeTraj = getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
-        FixedWTAlgorithm(beforeTraj,35);
+        FixedWTAlgorithm(beforeTraj,200);
         getTime.setEndTime(System.currentTimeMillis());
-        System.out.println("压缩前轨迹点数："+beforeTraj.size());
-        System.out.println("压缩后轨迹点数："+afterTraj.size());
+        System.out.println("FixedWT算法");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);

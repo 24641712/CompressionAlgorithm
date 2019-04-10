@@ -37,14 +37,14 @@ public class SQUISH_E {
                 reduce(afterTraj);
             }
         }
-        System.out.println("优先队列的容量是："+capacity);
+//        System.out.println("优先队列的容量是："+capacity);
         double priority = min_priority(afterTraj);
-        System.out.println("优先级是："+priority);
+//        System.out.println("优先级是："+priority);
         //删除优先级小于阈值的轨迹点
         while(priority < maxdis){
             reduce(afterTraj);
             priority = min_priority(afterTraj);
-            System.out.println("优先级是："+priority);
+//            System.out.println("优先级是："+priority);
         }
         return afterTraj;
     }
@@ -108,20 +108,18 @@ public class SQUISH_E {
      *@param args 参数
      *@return void
      **/
-    public static void main(String[] args) throws Exception {
+    public static void main(String []args) throws Exception {
         ArrayList<Point> beforeTraj = new ArrayList<>();
         ArrayList<Point> afterTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
         maxdis = 0.000156;
-        File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
-        beforeTraj = getData.getDataFromFile(file,"1");
+        beforeTraj = getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         afterTraj = SQUISH_EAlgorithm(beforeTraj,0.4,maxdis);
         getTime.setEndTime(System.currentTimeMillis());
-        System.out.println("压缩前的轨迹点数："+beforeTraj.size());
-        System.out.println("压缩后的轨迹点数："+afterTraj.size());
+        System.out.println("SQUISH-E算法");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);

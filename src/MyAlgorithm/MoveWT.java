@@ -103,7 +103,7 @@ public class MoveWT {
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt");
-        beforeTraj = getData.getDataFromFile(file,"1");
+        beforeTraj = getData.getDataFromFile(10,"1");
         MoveWTAlgorithm(beforeTraj,0,beforeTraj.size()-1,4);
         System.out.println("压缩后轨迹点数："+afterTraj.size());
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());

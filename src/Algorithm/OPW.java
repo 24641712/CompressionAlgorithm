@@ -39,7 +39,7 @@ public class OPW {
             for(Point point : listPoint) {
                 double disOfTwo = distance.getDistance(beforeTraj.get(startPoint),
                         beforeTraj.get(floatPoint),point);
-                System.out.println("disOfTwo="+disOfTwo);
+//                System.out.println("disOfTwo="+disOfTwo);
                 if(disOfTwo >= 1.190){
                     flag = true;
                     break;
@@ -69,21 +69,20 @@ public class OPW {
         return afterTraj;
     }
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String []args) throws Exception{
         double maxDistError = 30;
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
-        String path = "F:\\GeolifeTrajectoriesData\\000\\Trajectory\\15.plt";
-        File file = new File(path);
-        beforeTraj = getData.getDataFromFile(file,"1");
+        beforeTraj = getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         afterTraj = openWindowAlgorithm(beforeTraj,maxDistError);
         getTime.setEndTime(System.currentTimeMillis());
-        System.out.println("压缩前轨迹点数："+beforeTraj.size());
-        System.out.println("压缩后的轨迹数："+afterTraj.size());
+//        System.out.println("压缩前轨迹点数："+beforeTraj.size());
+//        System.out.println("压缩后的轨迹数："+afterTraj.size());
+        System.out.println("OPW算法");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);

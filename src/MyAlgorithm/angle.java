@@ -81,7 +81,7 @@ public class angle {
         limitAngle = (float) -0.9836571;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\1.plt");
         ArrayList<Point> beforeTraj=new ArrayList<Point>();
-        beforeTraj =getData.getDataFromFile(file,"1");
+        beforeTraj =getData.getDataFromFile(10000,"1");
         System.out.println(beforeTraj.size());
         runAngle(beforeTraj, 0, beforeTraj.size()-1,1);
 //			runAngle(list, 2, 111,1);
