@@ -22,7 +22,7 @@ public class Point implements Comparable<Point> {
 
     private String time;  //时分秒
 
-    private char Res='T';  //是否是被删除轨迹点
+    private char Res='T';  //是否是特征点
 
     private double priority;
 

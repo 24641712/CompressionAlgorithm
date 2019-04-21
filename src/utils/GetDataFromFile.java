@@ -18,8 +18,8 @@ public class GetDataFromFile {
             throws Exception {
         ArrayList<Point> list = new ArrayList<Point>();
         boolean flag = false;
-        for(int i=1;i<=4;i++){
-            String path = "F:\\trajs\\"+i+".plt";
+//        for(int i=1;i<=4;i++){
+            String path = "F:\\trajs\\"+11+".plt";
             File file = new File(path);
             if (file.exists() && file.isFile()) {
                 InputStreamReader read = new InputStreamReader(new FileInputStream(file));
@@ -39,15 +39,15 @@ public class GetDataFromFile {
                     list.add(point);
                     if(list.size()>=number){
                         flag = true;
-                        break;
+//                        break;
                     }
                 }
                 bReader.close();
                 read.close();
             }
-            if(flag == true)
-                break;;
-        }
+//            if(flag == true)
+//                break;;
+//        }
         return list;
     }
 

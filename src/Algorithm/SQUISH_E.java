@@ -114,7 +114,7 @@ public class SQUISH_E {
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
-        maxdis = 0.000156;
+        maxdis = 0.0000698;
         beforeTraj = getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         afterTraj = SQUISH_EAlgorithm(beforeTraj,0.4,maxdis);

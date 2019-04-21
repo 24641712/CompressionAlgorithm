@@ -86,7 +86,7 @@ public class TD_TR {
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
-        LimitDis = 0.0047;
+        LimitDis = 2.9000298;
         beforeTraj = getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         TD_TRAlgorithm(beforeTraj,0,beforeTraj.size()-1);

@@ -40,7 +40,7 @@ public class OPW {
                 double disOfTwo = distance.getDistance(beforeTraj.get(startPoint),
                         beforeTraj.get(floatPoint),point);
 //                System.out.println("disOfTwo="+disOfTwo);
-                if(disOfTwo >= 1.190){
+                if(disOfTwo >= maxdis){
                     flag = true;
                     break;
                 }
@@ -70,7 +70,7 @@ public class OPW {
     }
 
     public static void main(String []args) throws Exception{
-        double maxDistError = 30;
+        double maxDistError = 0.7;
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         GetDataFromFile getData = new GetDataFromFile();

@@ -75,7 +75,7 @@ public class OPW_TR {
      *@return void
      **/
     public static void main(String []args) throws Exception{
-        double maxDist = 0.00012;
+        double maxDist = 2.9000298;
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         Estimate estimate = new Estimate();

@@ -39,7 +39,7 @@ public class DP {
      *@return void
      **/
     static void DPAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
-        double a,b,c,cosA,cosB,sinA,maxdis,curdis;
+        double maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
 //        System.out.print("start="+start+"  end="+end);
@@ -67,18 +67,16 @@ public class DP {
                 Delpt(beforeTraj,start,end);
                 delTotal++;
             }
-        }else{
         }
     }
 
     //主函数
     public static void main(String []args) throws Exception {
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
-        ArrayList<Point> points = new ArrayList<>();
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
-        LimitDis = (float) 2.9000298;
+        LimitDis = (float) 1.6000298;
         beforeTraj =getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         DPAlgorithm(beforeTraj,0,beforeTraj.size()-1);
