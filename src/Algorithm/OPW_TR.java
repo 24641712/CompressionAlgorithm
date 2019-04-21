@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * 基于同步欧式距离(SED)的的滑动窗口算法
+ * 基于同步欧式距离(SED)的开放窗口算法
  * @Author ccl
  * @Date 2019/3/5
  */

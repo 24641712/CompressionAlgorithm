@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * 基于欧式距离的开放窗口算法
+ * 基于垂直距离的的开放窗口（OPW）算法
  * @Author ccl
  */
 public class OPW {

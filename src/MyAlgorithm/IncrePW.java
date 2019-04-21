@@ -41,7 +41,7 @@ public class IncrePW {
             }
             if(right<lenght){
                 Point pa = beforeTraj.get(left);
-                Point pb = beforeTraj.get(right+1);
+                Point pb = beforeTraj.get(++right);
                 curdis = distance.getDistance(pa,pb,pc);
                 if(maxdis<curdis){
                     maxdis = curdis;
@@ -52,9 +52,9 @@ public class IncrePW {
             }
             if(left<=0)leftFlag = false;
             //left不能越过上一个特征点
-            left = left>tzd?left--:tzd;
+            left = left>tzd?--left:tzd;
             if(rightFlag)
-            right = right<lenght?++right:(lenght-1);
+            right = right<(lenght-1)?right:(lenght-2);
         }
         return maxdis;
     }
@@ -75,6 +75,7 @@ public class IncrePW {
                maxdis = curdis;
            }else{
                if(maxdis>LimitDis){
+                   tzd = i;
                    afterTraj.add(beforeTraj.get(i));
                }
                maxdis = 0;
