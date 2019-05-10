@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * 基于垂直距离的的开放窗口（OPW）算法
+ * 基于垂直距离的开放窗口（OPW）算法
  * @Author ccl
  */
 public class OPW {
@@ -24,7 +24,7 @@ public class OPW {
      *@return 压缩后的轨迹点
      **/
     public static ArrayList<Point> openWindowAlgorithm (
-                    ArrayList<Point> beforeTraj, double maxdis) {
+                    ArrayList<Point> beforeTraj, double LimitDis) {
 
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         int startPoint = 0;
@@ -36,11 +36,11 @@ public class OPW {
         listPoint.add(beforeTraj.get(nowPoint));
         while(true) {
             boolean flag = false;
-            for(Point point : listPoint) {
+            for(Point point : listPoint){
                 double disOfTwo = distance.getDistance(beforeTraj.get(startPoint),
-                        beforeTraj.get(floatPoint),point);
+                            beforeTraj.get(floatPoint),point);
 //                System.out.println("disOfTwo="+disOfTwo);
-                if(disOfTwo >= maxdis){
+                if(disOfTwo >= LimitDis) {
                     flag = true;
                     break;
                 }
@@ -70,7 +70,7 @@ public class OPW {
     }
 
     public static void main(String []args) throws Exception{
-        double maxDistError = 0.7;
+        double maxDistError = 1.9;
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         GetDataFromFile getData = new GetDataFromFile();
@@ -80,9 +80,9 @@ public class OPW {
         getTime.setStartTime(System.currentTimeMillis());
         afterTraj = openWindowAlgorithm(beforeTraj,maxDistError);
         getTime.setEndTime(System.currentTimeMillis());
-//        System.out.println("压缩前轨迹点数："+beforeTraj.size());
-//        System.out.println("压缩后的轨迹数："+afterTraj.size());
         System.out.println("OPW算法");
+        System.out.println("压缩前轨迹点数："+beforeTraj.size());
+        System.out.println("压缩后轨迹点数："+afterTraj.size());
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);

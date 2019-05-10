@@ -58,7 +58,7 @@ public class OPW_TR {
             }else {
                 listPoint.add(beforeTraj.get(floatPoint));
                 floatPoint += 1;
-                if(floatPoint >= len) {
+                if(floatPoint >= len){
                     afterTraj.add(beforeTraj.get(startPoint));
                     afterTraj.add(beforeTraj.get(floatPoint-1));
                     break;
@@ -75,7 +75,7 @@ public class OPW_TR {
      *@return void
      **/
     public static void main(String []args) throws Exception{
-        double maxDist = 2.9000298;
+        double maxDist = 0.00005700298;
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         Estimate estimate = new Estimate();
@@ -85,8 +85,8 @@ public class OPW_TR {
         getTime.setStartTime(System.currentTimeMillis());
         afterTraj = openWindow_TRAlgorithm(beforeTraj,maxDist);
         getTime.setEndTime(System.currentTimeMillis());
-//        System.out.println("压缩前轨迹点数："+beforeTraj.size());
-//        System.out.println("压缩后轨迹点数："+afterTraj.size());
+        System.out.println("压缩前轨迹点数："+beforeTraj.size());
+        System.out.println("压缩后轨迹点数："+afterTraj.size());
         System.out.println("OPW-TR算法");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());

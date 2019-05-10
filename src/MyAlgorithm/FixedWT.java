@@ -88,7 +88,7 @@ public class FixedWT {
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
-        dpLimitDis = 0.124;
+        dpLimitDis = 1.700124;
         beforeTraj = getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         FixedWTAlgorithm(beforeTraj,200);
