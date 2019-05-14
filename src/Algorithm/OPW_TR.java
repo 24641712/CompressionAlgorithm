@@ -87,7 +87,7 @@ public class OPW_TR {
         getTime.setEndTime(System.currentTimeMillis());
         System.out.println("压缩前轨迹点数："+beforeTraj.size());
         System.out.println("压缩后轨迹点数："+afterTraj.size());
-        System.out.println("OPW-TR算法");
+        System.out.println("OPW_Impro-TR算法");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);

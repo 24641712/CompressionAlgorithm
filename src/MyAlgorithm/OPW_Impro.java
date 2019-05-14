@@ -1,4 +1,4 @@
-package Algorithm;
+package MyAlgorithm;
 
 import entity.Point;
 import estimate.Estimate;
@@ -16,7 +16,7 @@ import java.util.Iterator;
  * 基于垂直距离的开放窗口（OPW_Impro）算法
  * @Author ccl
  */
-public class OPW {
+public class OPW_Impro {
     /*
      *开放窗口算法实现
      *@param sourceList 源轨迹集合
@@ -39,7 +39,7 @@ public class OPW {
             for(Point point : listPoint){
                 double disOfTwo = distance.getDistance(beforeTraj.get(startPoint),
                             beforeTraj.get(floatPoint),point);
-//                System.out.println("disOfTwo="+disOfTwo);
+                System.out.println("disOfTwo="+disOfTwo);
                 if(disOfTwo >= LimitDis) {
                     flag = true;
                     break;
@@ -70,7 +70,7 @@ public class OPW {
     }
 
     public static void main(String []args) throws Exception{
-        double maxDistError = 14.9;
+        double maxDistError = 1.9;
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         GetDataFromFile getData = new GetDataFromFile();
