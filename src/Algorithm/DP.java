@@ -31,14 +31,14 @@ public class DP {
         }
     }
 
-    /*
-     *道格拉斯-普克算法（Algorithm.DP）算法
-     *@param list 源轨迹集合
-     *@param p1 起始点
-     *@param p2 终止点
-     *@return void
-     **/
     static void DPAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
+        /*
+         *道格拉斯-普克算法（Algorithm.DP）算法
+         *@param list 源轨迹集合
+         *@param p1 起始点
+         *@param p2 终止点
+         *@return void
+         **/
         double maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();

@@ -17,14 +17,14 @@ import java.util.Iterator;
  * @Author ccl
  */
 public class OPW {
-    /*
-     *开放窗口算法实现
-     *@param sourceList 源轨迹集合
-     *@param maxdis 误差阈值
-     *@return 压缩后的轨迹点
-     **/
+
     public static ArrayList<Point> openWindowAlgorithm (
-                    ArrayList<Point> beforeTraj, double LimitDis) {
+                    ArrayList<Point> beforeTraj, double LimitDis) {    /*
+         *开放窗口算法实现
+         *@param sourceList 源轨迹集合
+         *@param maxdis 误差阈值
+         *@return 压缩后的轨迹点
+         **/
 
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         int startPoint = 0;
@@ -70,7 +70,7 @@ public class OPW {
     }
 
     public static void main(String []args) throws Exception{
-        double maxDistError = 14.9;
+        double maxDistError = 18.1;
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         GetDataFromFile getData = new GetDataFromFile();

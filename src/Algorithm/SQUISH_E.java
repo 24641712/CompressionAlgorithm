@@ -49,12 +49,12 @@ public class SQUISH_E {
         return afterTraj;
     }
 
-    /*
-     *删除最小优先级的节点
-     *@param aftertraj 优先队列
-     *@return void
-     **/
     public static void reduce(ArrayList<Point> aftertraj){
+        /*
+         *删除最小优先级的节点
+         *@param aftertraj 优先队列
+         *@return void
+         **/
         double priority = Double.MAX_VALUE;
         int index = 0;
         for(int i=1;i<aftertraj.size()-1;i++){
@@ -70,12 +70,12 @@ public class SQUISH_E {
         aftertraj.remove(index);//删除最小优先级的节点
     }
 
-    /*
-     *@param index 有调整优先级的节点
-     *@param afterTraj 优先级队列
-     *@return void
-     **/
     public static void adjust_priority(int index,ArrayList<Point> afterTraj){
+        /*
+         *@param index 有调整优先级的节点
+         *@param afterTraj 优先级队列
+         *@return void
+         **/
         Distance distance = new Distance();
         double priority = 0;
         Point A = afterTraj.get(index-1);
@@ -86,12 +86,12 @@ public class SQUISH_E {
         afterTraj.get(index).setPriority(priority);
     }
 
-    /*
-     *查找优先级队列中最低优先级
-     *@param afterTraj 优先级队列
-     *@return 最低优先级
-     **/
     public static double min_priority(ArrayList<Point> afterTraj){
+        /*
+         *查找优先级队列中最低优先级
+         *@param afterTraj 优先级队列
+         *@return 最低优先级
+         **/
         double minpriority = Double.MAX_VALUE;
         double temp = 0;
         for(int i=1;i<afterTraj.size()-1;i++) {
@@ -103,12 +103,12 @@ public class SQUISH_E {
         return minpriority;
     }
 
-    /*
-     *主函数
-     *@param args 参数
-     *@return void
-     **/
     public static void main(String []args) throws Exception {
+        /*
+         *主函数
+         *@param args 参数
+         *@return void
+         **/
         ArrayList<Point> beforeTraj = new ArrayList<>();
         ArrayList<Point> afterTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();

@@ -20,14 +20,13 @@ public class TD_TR {
     static double LimitDis;//阈值
     private static int delTotal=0;//统计删除数据
 
-    /*
-     *
-     *@param beforeTraj 压缩前轨迹点
-     *@param start 起始下标
-     *@param end 终止下标
-     *@return void
-     **/
     public static void TD_TRAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
+        /*
+         *@param beforeTraj 压缩前轨迹点
+         *@param start 起始下标
+         *@param end 终止下标
+         *@return void
+         **/
         double a,b,c,cosA,cosB,sinA,maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
@@ -61,14 +60,14 @@ public class TD_TR {
         }
     }
 
-    /*
-     *删除轨迹点
-     *@param list 原始轨迹
-     *@param a 起始位置下标
-     *@param b 终止位置下标
-     *@return void
-     **/
     protected static void Delpt(ArrayList<Point> list,int a,int b) {
+        /*
+         *删除轨迹点
+         *@param list 原始轨迹
+         *@param a 起始位置下标
+         *@param b 终止位置下标
+         *@return void
+         **/
         int c=a+1;
         while(c<b){
             list.get(c).setRes('F');
@@ -76,12 +75,12 @@ public class TD_TR {
         }
     }
 
-    /*
-     *主函数
-     *@param args 参数
-     *@return void
-     **/
     public static void main(String []args) throws Exception {
+        /*
+         *主函数
+         *@param args 参数
+         *@return void
+         **/
         ArrayList<Point> beforeTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
