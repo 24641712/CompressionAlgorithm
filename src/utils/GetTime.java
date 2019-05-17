@@ -19,7 +19,7 @@ public class GetTime {
     }
 
     public void showTime(){
-        System.out.println("程序执行耗时："+(this.endTime-this.startTime)+"毫秒");
+        System.out.println("程序执行耗时："+(this.endTime-this.startTime)+"ms");
     }
 
 
