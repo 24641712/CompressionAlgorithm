@@ -70,7 +70,7 @@ public class OPW {
     }
 
     public static void main(String []args) throws Exception{
-        double maxDistError = 18.1;
+        double maxDistError = 0.7;
         ArrayList<Point> beforeTraj = new ArrayList<Point>();
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         GetDataFromFile getData = new GetDataFromFile();
