@@ -76,7 +76,7 @@ public class DP {
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
-        LimitDis = (float) 1.6000298;
+        LimitDis = (float) 1.65000298;
         beforeTraj =getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         DPAlgorithm(beforeTraj,0,beforeTraj.size()-1);
