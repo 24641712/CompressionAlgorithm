@@ -6,13 +6,14 @@ import utils.Distance;
 import utils.GetDataFromFile;
 import utils.GetTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class IncrePW {
     /**
      * 基本思想：第一个轨迹点是特征点，从第三个点
-     * 开始若期间有轨迹点欧式距离一直增大直到减小
-     * 时的最大欧式距离的点是轨迹点。
-     * 算法改进：找到最大特征点后，将起点设定为浮动点的
+     * 开始期间一直增大到最大
+     * 时的欧式距离的点是轨迹点。
+     * 算法改进：找到最大特征点，将起点设定为浮动点的
      * 上一个点。
      * @Author ccl
      * @Date 2019/4/20
@@ -20,12 +21,12 @@ public class IncrePW {
     static double DPLimitDist1;
     static double LimitDist2;
     static int index = 0;
-    static ArrayList<Point> afterTraj = new ArrayList<Point>();
-    static ArrayList<Point> afterTraj_copy = new ArrayList<Point>();
+    static List<Point> afterTraj = new ArrayList<Point>();
+    static List<Point> afterTraj_copy = new ArrayList<Point>();
 
     static void DPAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
        /*
-        *道格拉斯-普克算法（Algorithm.DP）算法
+        *道格拉斯-普克（Algorithm.DP）算法
         *@param beforeTraj 源轨迹集合
         *@param start 起始点
         *@param end 终止点
@@ -49,6 +50,7 @@ public class IncrePW {
                 }
                 i++;
             }//end while
+
              System.out.println("maxdis="+maxdis+" index="+maxNO);
             if(maxdis >= DPLimitDist1) {
                 afterTraj.add(beforeTraj.get(maxNO));
@@ -60,7 +62,7 @@ public class IncrePW {
 
     public static double getMaxDist(ArrayList<Point> beforeTraj,int tzd,int k){
        /*
-        *求特征点tzd与第k个点间的最大欧式距离
+        *求特征点tzd与第k个点间的最大垂直距离
         *@param beforeTraj 源轨迹点
         *@param tzd 特征点
         *@param k 轨迹点
@@ -114,7 +116,7 @@ public class IncrePW {
        }
     }
 
-    public static void secnd_Compress_Tragectory(ArrayList<Point> beforeTraj){
+    public static void second_Compress_Tragectory(ArrayList<Point> beforeTraj){
         /*
          *对压缩后的轨迹点进行二次压缩
          *@param beforeTraj
@@ -132,14 +134,14 @@ public class IncrePW {
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
-        DPLimitDist1 = (float) 1.400000;
-        LimitDist2 = (float) 25.00000;
+        DPLimitDist1 = (float) 1.450000;
+        LimitDist2 = (float) 50.00000;
         beforeTraj =getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         //找最大轨迹点
         IncrementPWAlgorithm(beforeTraj);
         //进行二次压缩
-        secnd_Compress_Tragectory(beforeTraj);
+        second_Compress_Tragectory(beforeTraj);
         getTime.setEndTime(System.currentTimeMillis());
         System.out.println("IncrePW算法");
         System.out.println("压缩前的轨迹点数："+beforeTraj.size());
