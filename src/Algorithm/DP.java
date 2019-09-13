@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *道格拉斯-普克算法的实现
@@ -23,7 +24,7 @@ public class DP {
     private static int delTotal=0;
 
     //删除轨迹点
-    protected static void Delpt(ArrayList<Point> list,int a,int b) {
+    protected static void Delpt(List<Point> list,int a,int b) {
         int c=a+1;
         while(c<b){
             list.get(c).setRes('F');
@@ -31,7 +32,7 @@ public class DP {
         }
     }
 
-    static void DPAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
+    static void DPAlgorithm(List<Point> beforeTraj,int start,int end){
         /*
          *道格拉斯-普克算法（Algorithm.DP）算法
          *@param list 源轨迹集合
@@ -72,7 +73,7 @@ public class DP {
 
     //主函数
     public static void main(String []args) throws Exception {
-        ArrayList<Point> beforeTraj = new ArrayList<Point>();
+        List<Point> beforeTraj = new ArrayList<Point>();
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
