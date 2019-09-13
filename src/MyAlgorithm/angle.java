@@ -6,6 +6,7 @@ import utils.GetDataFromFile;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *基于角度的轨迹压缩算法
@@ -25,14 +26,14 @@ public class angle {
                 (pa.getLongitude()-pb.getLongitude()));
         return d;
     }
-    static void Delpt(ArrayList<Point> list, int a, int b) {
+    static void Delpt(List<Point> list, int a, int b) {
         int c=a+1;
         while(c<b)  {
             list.get(c).setRes('F');
             c++;
         }
     }
-    public static void runAngle(ArrayList< Point> list,int p1,int p2,int flag) {
+    public static void runAngle(List< Point> list,int p1,int p2,int flag) {
         float a,b,c,cosC,curAngle,minAngle;
         int i = 0,maxNO = 0;
         System.out.println("p1="+p1+", p2="+p2+" flag="+flag);
@@ -80,7 +81,7 @@ public class angle {
         GetDataFromFile getData=new GetDataFromFile();
         limitAngle = (float) -0.9836571;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\1.plt");
-        ArrayList<Point> beforeTraj=new ArrayList<Point>();
+        List<Point> beforeTraj=new ArrayList<Point>();
         beforeTraj =getData.getDataFromFile(10000,"1");
         System.out.println(beforeTraj.size());
         runAngle(beforeTraj, 0, beforeTraj.size()-1,1);
