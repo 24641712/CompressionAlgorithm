@@ -11,6 +11,7 @@ import java.io.RandomAccessFile;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * 基于垂直距离的开放窗口（OPW_Impro）算法
@@ -24,7 +25,7 @@ public class OPW_Impro {
      *@return 压缩后的轨迹点
      **/
     public static ArrayList<Point> openWindowAlgorithm (
-                    ArrayList<Point> beforeTraj, double LimitDis) {
+                    List<Point> beforeTraj, double LimitDis) {
 
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         int startPoint = 0;
@@ -71,8 +72,8 @@ public class OPW_Impro {
 
     public static void main(String []args) throws Exception{
         double maxDistError = 1.9;
-        ArrayList<Point> beforeTraj = new ArrayList<Point>();
-        ArrayList<Point> afterTraj = new ArrayList<Point>();
+        List<Point> beforeTraj = new ArrayList<Point>();
+        List<Point> afterTraj = new ArrayList<Point>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
