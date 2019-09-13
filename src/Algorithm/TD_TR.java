@@ -8,6 +8,7 @@ import utils.GetTime;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TD_TR算法，类似于DP算法，
@@ -20,7 +21,7 @@ public class TD_TR {
     static double LimitDis;//阈值
     private static int delTotal=0;//统计删除数据
 
-    public static void TD_TRAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
+    public static void TD_TRAlgorithm(List<Point> beforeTraj,int start,int end){
         /*
          *@param beforeTraj 压缩前轨迹点
          *@param start 起始下标
@@ -60,7 +61,7 @@ public class TD_TR {
         }
     }
 
-    protected static void Delpt(ArrayList<Point> list,int a,int b) {
+    protected static void Delpt(List<Point> list,int a,int b) {
         /*
          *删除轨迹点
          *@param list 原始轨迹
@@ -81,7 +82,7 @@ public class TD_TR {
          *@param args 参数
          *@return void
          **/
-        ArrayList<Point> beforeTraj = new ArrayList<>();
+        List<Point> beforeTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
