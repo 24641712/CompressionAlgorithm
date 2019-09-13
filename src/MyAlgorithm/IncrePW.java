@@ -14,13 +14,13 @@ import java.util.List;
  * 时的欧式距离的点是轨迹点。
  * 算法改进：找到最大特征点，将起点设定为浮动点的
  * 上一个点。
- * @Author ccl
+ * @Author ccl时
  * @Date 2019/4/20
  */
 public class IncrePW {
 
-    private final static double DPLimitDist1 = (float) 1.450000;
-    private static double IALimitDist2 = (float) 60.00000;
+    private final static double DPLimitDist1 = (float) 0.60500;
+    private static double IALimitDist2 = (float) 80.00000;
     static int index = 0;
     static List<Point> afterTraj = new ArrayList<Point>();
     static List<Point> afterTraj_copy = new ArrayList<Point>();
@@ -136,9 +136,7 @@ public class IncrePW {
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
 
-
         beforeTraj =getData.getDataFromFile(10000,"1");
-        beforeTraj = beforeTraj.subList(0,2000);
         getTime.setStartTime(System.currentTimeMillis());
         //找最大轨迹点
         IncrementPWAlgorithm(beforeTraj);
@@ -148,6 +146,7 @@ public class IncrePW {
         System.out.println("IncrePW算法");
         System.out.println("压缩前的轨迹点数："+beforeTraj.size());
         System.out.println("压缩后的轨迹点数："+afterTraj.size());
+        System.out.println("*********************");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
