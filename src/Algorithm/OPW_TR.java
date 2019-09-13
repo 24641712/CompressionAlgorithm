@@ -8,6 +8,7 @@ import utils.GetTime;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 基于同步欧式距离(SED)的开放窗口算法
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class OPW_TR {
 
     public static ArrayList<Point> openWindow_TRAlgorithm (
-                  ArrayList<Point> beforeTraj, double maxdis) {
+                  List<Point> beforeTraj, double maxdis) {
         /*
          *基于同步欧式距离的开放窗口算法
          *@param sourceList 压缩前轨迹数据
@@ -76,8 +77,8 @@ public class OPW_TR {
          *@return void
          **/
         double maxDist = 0.00005700298;
-        ArrayList<Point> beforeTraj = new ArrayList<Point>();
-        ArrayList<Point> afterTraj = new ArrayList<Point>();
+        List<Point> beforeTraj = new ArrayList<Point>();
+        List<Point> afterTraj = new ArrayList<Point>();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
         GetDataFromFile getData = new GetDataFromFile();

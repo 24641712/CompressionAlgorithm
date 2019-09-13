@@ -9,6 +9,7 @@ import utils.GetTime;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * SQUISH_E算法
@@ -18,7 +19,7 @@ import java.util.HashMap;
 public class SQUISH_E {
     static double maxdis;
 
-    public static  ArrayList<Point> SQUISH_EAlgorithm(ArrayList<Point> beforeTraj
+    public static  ArrayList<Point> SQUISH_EAlgorithm(List<Point> beforeTraj
                            ,double ratio,double maxdis){
         ArrayList<Point> afterTraj = new ArrayList<>();
         int []value = new int[1024];
@@ -109,8 +110,8 @@ public class SQUISH_E {
          *@param args 参数
          *@return void
          **/
-        ArrayList<Point> beforeTraj = new ArrayList<>();
-        ArrayList<Point> afterTraj = new ArrayList<>();
+        List<Point> beforeTraj = new ArrayList<>();
+        List<Point> afterTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();

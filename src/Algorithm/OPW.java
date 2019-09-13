@@ -11,6 +11,7 @@ import java.io.RandomAccessFile;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * 基于垂直距离的开放窗口（OPW_Impro）算法
@@ -19,7 +20,7 @@ import java.util.Iterator;
 public class OPW {
 
     public static ArrayList<Point> openWindowAlgorithm (
-                    ArrayList<Point> beforeTraj, double LimitDis) {    /*
+                    List<Point> beforeTraj, double LimitDis) {    /*
          *开放窗口算法实现
          *@param sourceList 源轨迹集合
          *@param maxdis 误差阈值
@@ -71,8 +72,8 @@ public class OPW {
 
     public static void main(String []args) throws Exception{
         double maxDistError = 0.7;
-        ArrayList<Point> beforeTraj = new ArrayList<Point>();
-        ArrayList<Point> afterTraj = new ArrayList<Point>();
+        List<Point> beforeTraj = new ArrayList<Point>();
+        List<Point> afterTraj = new ArrayList<Point>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
