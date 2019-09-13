@@ -18,10 +18,9 @@ import java.util.List;
  * @author ccl
  */
 public class DP {
-    static int iNum;
-    static double LimitDis;
-    private static ArrayList<Point> afterTraj = new ArrayList<Point>();
-    private static int delTotal=0;
+
+    private static List<Point> afterTraj = new ArrayList<Point>();
+    private final static double LimitDis = (float) 0.63700298;
 
     //删除轨迹点
     protected static void Delpt(List<Point> list,int a,int b) {
@@ -66,7 +65,6 @@ public class DP {
             }
             else {
                 Delpt(beforeTraj,start,end);
-                delTotal++;
             }
         }
     }
@@ -77,12 +75,15 @@ public class DP {
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
-        LimitDis = (float) 1.65000298;
+
         beforeTraj =getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         DPAlgorithm(beforeTraj,0,beforeTraj.size()-1);
         getTime.setEndTime(System.currentTimeMillis());
         System.out.println("DP算法");
+        System.out.println("压缩前的轨迹点数："+beforeTraj.size());
+        System.out.println("压缩后的轨迹点数："+afterTraj.size());
+        System.out.println("*********************");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
