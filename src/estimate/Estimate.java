@@ -6,6 +6,7 @@ import utils.Distance;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * 评估轨迹压缩算法的性能
@@ -32,8 +33,8 @@ public class Estimate {
      *@param afterTraj 压缩后的轨迹
      *@return void
      **/
-    public double CompressionError(ArrayList<Point> beforeTraj,
-                                 ArrayList<Point> afterTraj){
+    public double CompressionError(List<Point> beforeTraj,
+                                 List<Point> afterTraj){
         double sumDist = 0;
         double temp;
         Distance distance = new Distance();
