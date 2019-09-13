@@ -8,18 +8,19 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.sql.DriverManager;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 工具类：获取本地轨迹数据、写入数据库
  * @author ccl
  */
 public class GetDataFromFile {
-    public static ArrayList<Point> getDataFromFile(int number,String uid)
+    public static List<Point> getDataFromFile(int number, String uid)
             throws Exception {
-        ArrayList<Point> list = new ArrayList<Point>();
+        List<Point> list = new ArrayList<Point>();
         boolean flag = false;
 //        for(int i=1;i<=4;i++){
-            String path = "F:\\trajs\\"+11+".plt";
+            String path = "F:\\trajs\\"+3+".plt";
             File file = new File(path);
             if (file.exists() && file.isFile()) {
                 InputStreamReader read = new InputStreamReader(new FileInputStream(file));
@@ -52,7 +53,7 @@ public class GetDataFromFile {
     }
 
 
-    public static void writeDataTomysql(ArrayList<Point> points) {
+    public static void writeDataTomysql(List<Point> points) {
         // 将轨迹数据存入MySQL数据库
         String driver = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/paper";
