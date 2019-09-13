@@ -16,6 +16,7 @@ import java.util.List;
  * @Date 2019/3/5
  */
 public class OPW_TR {
+    private final static double maxDist = 0.0000901090000298;
 
     public static ArrayList<Point> openWindow_TRAlgorithm (
                   List<Point> beforeTraj, double maxdis) {
@@ -76,7 +77,7 @@ public class OPW_TR {
          *@param args 参数
          *@return void
          **/
-        double maxDist = 0.00005700298;
+
         List<Point> beforeTraj = new ArrayList<Point>();
         List<Point> afterTraj = new ArrayList<Point>();
         Estimate estimate = new Estimate();
@@ -86,9 +87,10 @@ public class OPW_TR {
         getTime.setStartTime(System.currentTimeMillis());
         afterTraj = openWindow_TRAlgorithm(beforeTraj,maxDist);
         getTime.setEndTime(System.currentTimeMillis());
+        System.out.println("OPW-TR算法");
         System.out.println("压缩前轨迹点数："+beforeTraj.size());
         System.out.println("压缩后轨迹点数："+afterTraj.size());
-        System.out.println("OPW_Impro-TR算法");
+        System.out.println("*********************");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);

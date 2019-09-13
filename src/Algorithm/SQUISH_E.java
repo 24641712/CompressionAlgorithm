@@ -17,7 +17,7 @@ import java.util.List;
  * @Date 2019/3/5
  */
 public class SQUISH_E {
-    static double maxdis;
+    private final static double maxdis = 0.00009999;
 
     public static  ArrayList<Point> SQUISH_EAlgorithm(List<Point> beforeTraj
                            ,double ratio,double maxdis){
@@ -115,7 +115,7 @@ public class SQUISH_E {
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
-        maxdis = 0.0000698;
+
         beforeTraj = getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         afterTraj = SQUISH_EAlgorithm(beforeTraj,0.4,maxdis);

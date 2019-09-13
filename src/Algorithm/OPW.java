@@ -19,10 +19,12 @@ import java.util.List;
  */
 public class OPW {
 
+    private final static double maxDistError = 0.20;
+
     public static ArrayList<Point> openWindowAlgorithm (
                     List<Point> beforeTraj, double LimitDis) {    /*
          *开放窗口算法实现
-         *@param sourceList 源轨迹集合
+         *@param sourceList 源轨迹集
          *@param maxdis 误差阈值
          *@return 压缩后的轨迹点
          **/
@@ -71,7 +73,7 @@ public class OPW {
     }
 
     public static void main(String []args) throws Exception{
-        double maxDistError = 0.7;
+
         List<Point> beforeTraj = new ArrayList<Point>();
         List<Point> afterTraj = new ArrayList<Point>();
         GetDataFromFile getData = new GetDataFromFile();
@@ -84,6 +86,7 @@ public class OPW {
         System.out.println("OPW算法");
         System.out.println("压缩前轨迹点数："+beforeTraj.size());
         System.out.println("压缩后轨迹点数："+afterTraj.size());
+        System.out.println("*********************");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
