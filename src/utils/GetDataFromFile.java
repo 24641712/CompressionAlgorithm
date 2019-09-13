@@ -15,6 +15,9 @@ import java.util.List;
  * @author ccl
  */
 public class GetDataFromFile {
+
+    private final static int size = 8000;
+
     public static List<Point> getDataFromFile(int number, String uid)
             throws Exception {
         List<Point> list = new ArrayList<Point>();
@@ -49,7 +52,7 @@ public class GetDataFromFile {
 //            if(flag == true)
 //                break;;
 //        }
-        return list;
+        return list.subList(0,size);
     }
 
 
