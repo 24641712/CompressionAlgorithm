@@ -7,6 +7,7 @@ import utils.GetDataFromFile;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,7 +28,7 @@ public class CompAngle {
         return d;
     }
 
-    static void Delpt(ArrayList<Point> list,int a,int b) {
+    static void Delpt(List<Point> list,int a,int b) {
         int c=a+1;
         while(c<b)  {
             list.get(c).setRes('F');
@@ -35,7 +36,7 @@ public class CompAngle {
             c++;
         }
     }
-    public static void runAngle(ArrayList< Point> list,int p1,int p2,int flag) {
+    public static void runAngle(List< Point> list,int p1,int p2,int flag) {
 
         float a,b,c,cosC,curAngle,minAngle;
         int i = 0,maxNO = 0;
@@ -83,14 +84,14 @@ public class CompAngle {
 
     public static void main(String[] args) throws Exception {
 
-        ArrayList<Point> points = new ArrayList<>();
+        List<Point> points = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         float comp=0;
         limitAngle = (float) -0.9969571;
         File file = new File("F:\\GeolifeTrajectoriesData\\000\\Trajectory\\1.plt");
-        ArrayList<Point> beforeTraj=new ArrayList<Point>();
+        List<Point> beforeTraj=new ArrayList<Point>();
         beforeTraj = getData.getDataFromFile(10,"1");
         System.out.println(beforeTraj.size());
         comp = 1-(float)(Double.parseDouble(scanner.next())/100.0);

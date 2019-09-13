@@ -8,6 +8,7 @@ import utils.GetTime;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 线上压缩算法：固定窗口的轨迹压缩算法，
@@ -29,7 +30,7 @@ public class FixedWT {
      *@param end 终止点
      *@return void
      **/
-    protected static void dpAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
+    protected static void dpAlgorithm(List<Point> beforeTraj,int start,int end){
         Point pa = beforeTraj.get(start);
         Point pb = beforeTraj.get(end);
         Distance distance = new Distance();
@@ -58,7 +59,7 @@ public class FixedWT {
      *@param size 容器大小
      *@return void
      **/
-    public static void FixedWTAlgorithm(ArrayList<Point> beforeTraj,int size){
+    public static void FixedWTAlgorithm(List<Point> beforeTraj,int size){
         int number = beforeTraj.size();
         int start=1;
         int end = start + size;
@@ -84,7 +85,7 @@ public class FixedWT {
      *@return void
      **/
     public static void main(String[] paths) throws Exception {
-        ArrayList<Point> beforeTraj = new ArrayList<>();
+        List<Point> beforeTraj = new ArrayList<>();
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();

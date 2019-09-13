@@ -7,6 +7,7 @@ import utils.GetDataFromFile;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 用一个固定大小的窗口通过移动确定特征点
@@ -29,7 +30,7 @@ public class MoveWT {
      *@param end 终止点
      *@return void
      **/
-    protected static void dpAlgorithm(ArrayList<Point> beforeTraj,int start,int end){
+    protected static void dpAlgorithm(List<Point> beforeTraj,int start,int end){
         Point pa = beforeTraj.get(start);
         Point pb = beforeTraj.get(end);
         double maxdis = 0;
@@ -59,7 +60,7 @@ public class MoveWT {
      *@param size 移动窗口大小
      *@return void
      **/
-    public static void MoveWTAlgorithm(ArrayList<Point> beforeTraj,
+    public static void MoveWTAlgorithm(List<Point> beforeTraj,
                               int start,int end,int size) {
         double maxdis = 0;
         int index = 0;
@@ -97,7 +98,7 @@ public class MoveWT {
      *@return void
      **/
     public static void main(String[] args) throws Exception {
-        ArrayList<Point> beforeTraj = new ArrayList<Point>();
+        List<Point> beforeTraj = new ArrayList<Point>();
         mwtLimitDis =  0.000020005;
         dpLimitDis = 0.000030;
         Estimate estimate = new Estimate();

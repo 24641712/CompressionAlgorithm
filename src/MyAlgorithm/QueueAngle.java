@@ -7,6 +7,7 @@ import utils.GetDataFromFile;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 基于队列的轨迹压缩算法
@@ -36,7 +37,7 @@ public class QueueAngle {
         cosC = (a*a + b*b - c*c)/(2*a*b);
         return cosC;
     }
-    public static ArrayList<Point> runAngle(ArrayList< Point> sourceList,int p1,int p2) {
+    public static ArrayList<Point> runAngle(List< Point> sourceList,int p1,int p2) {
         ArrayList<Point> targetList = new ArrayList<Point>();
         int startPoint = 0;
         int floatPoint = 2;
@@ -83,9 +84,9 @@ public class QueueAngle {
     }
 
     public static void main(String[] args) throws Exception {
-        ArrayList<Point> points = new ArrayList<>();
-        ArrayList<Point> targetList = new ArrayList<Point>();
-        ArrayList<Point> beforeTraj = new ArrayList<Point>();
+        List<Point> points = new ArrayList<>();
+        List<Point> targetList = new ArrayList<Point>();
+        List<Point> beforeTraj = new ArrayList<Point>();
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         limitAngle = (float) -0.9836571;
