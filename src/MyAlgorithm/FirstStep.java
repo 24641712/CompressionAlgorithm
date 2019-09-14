@@ -23,14 +23,14 @@ public class FirstStep {
     static List<Point> afterTraj = new ArrayList<Point>();
     static List<Point> afterTraj_copy = new ArrayList<Point>();
 
+    /*
+     *道格拉斯-普克（Algorithm.DP）算法
+     *@param beforeTraj 源轨迹集合
+     *@param start 起始点
+     *@param end 终止点
+     *@return void
+     **/
     static void DPAlgorithm(List<Point> beforeTraj,int start,int end){
-        /*
-         *道格拉斯-普克（Algorithm.DP）算法
-         *@param beforeTraj 源轨迹集合
-         *@param start 起始点
-         *@param end 终止点
-         *@return void
-         **/
         double maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
@@ -83,12 +83,12 @@ public class FirstStep {
         return maxdist;
     }
 
+    /*
+     *最大欧式距离增加到最大时的轨迹点就是特征点
+     *@param beforeTraj 源轨迹点
+     *@return 压缩后的轨迹点
+     **/
     public static void IncrementPWAlgorithm(List<Point> beforeTraj){
-        /*
-         *最大欧式距离增加到最大时的轨迹点就是特征点
-         *@param beforeTraj 源轨迹点
-         *@return 压缩后的轨迹点
-         **/
         int length = beforeTraj.size();
         int tzd = 0;//特征点
         double maxdist = 0,curdist;
@@ -115,12 +115,12 @@ public class FirstStep {
         }
     }
 
+    /*
+     *对压缩后的轨迹点进行二次压缩
+     *@param beforeTraj
+     *@return
+     **/
     public static void second_Compress_Tragectory(List<Point> beforeTraj){
-        /*
-         *对压缩后的轨迹点进行二次压缩
-         *@param beforeTraj
-         *@return
-         **/
         for(int i=0;i<afterTraj_copy.size()-1;i++){
             int left = afterTraj_copy.get(i).getPid();
             int right = afterTraj_copy.get(i+1).getPid();
@@ -133,13 +133,12 @@ public class FirstStep {
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
-
         beforeTraj =getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         //找最大轨迹点
         IncrementPWAlgorithm(beforeTraj);
         //进行二次压缩
-        second_Compress_Tragectory(beforeTraj);
+//        second_Compress_Tragectory(beforeTraj);
         getTime.setEndTime(System.currentTimeMillis());
         System.out.println("IncrePW算法");
         System.out.println("压缩前的轨迹点数："+beforeTraj.size());
