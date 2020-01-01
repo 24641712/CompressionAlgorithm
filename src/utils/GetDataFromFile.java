@@ -16,14 +16,14 @@ import java.util.List;
  */
 public class GetDataFromFile {
 
-    private final static int size = 8000;
+    private final static int size = 20000;
 
     public static List<Point> getDataFromFile(int number, String uid)
             throws Exception {
         List<Point> list = new ArrayList<Point>();
         boolean flag = false;
 //        for(int i=1;i<=4;i++){
-            String path = "F:\\trajs\\"+3+".plt";
+            String path = "F:\\trajs\\"+4+".plt";
             File file = new File(path);
             if (file.exists() && file.isFile()) {
                 InputStreamReader read = new InputStreamReader(new FileInputStream(file));

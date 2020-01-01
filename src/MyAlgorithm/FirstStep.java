@@ -9,6 +9,7 @@ import utils.GetTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * @version 1.0
  * @Description：极大值的轨迹数据压缩算法（第一阶段）
@@ -17,8 +18,8 @@ import java.util.List;
  * Created Date : 2019/9/13
  */
 public class FirstStep {
-    private final static double DPLimitDist1 = (float) 0.60500;
-    private static double IALimitDist2 = (float) 80.00000;
+    private final static double DPLimitDist1 = (float) 0.2040;
+    private static double IALimitDist2 = (float) 100.85999999;
     static int index = 0;
     static List<Point> afterTraj = new ArrayList<Point>();
     static List<Point> afterTraj_copy = new ArrayList<Point>();
@@ -59,14 +60,14 @@ public class FirstStep {
         }
     }
 
+    /*
+     *求特征点tzd与第k个点间的最大垂直欧氏距离
+     *@param beforeTraj 源轨迹点
+     *@param tzd 特征点
+     *@param k 轨迹点
+     *@return 最大欧式距离
+     **/
     public static double getMaxDist(List<Point> beforeTraj,int tzd,int k){
-        /*
-         *求特征点tzd与第k个点间的最大垂直欧氏距离
-         *@param beforeTraj 源轨迹点
-         *@param tzd 特征点
-         *@param k 轨迹点
-         *@return 最大欧式距离
-         **/
         double maxdist = 0;
         double curdist = 0;
         Point pa = beforeTraj.get(tzd);
@@ -138,7 +139,7 @@ public class FirstStep {
         //找最大轨迹点
         IncrementPWAlgorithm(beforeTraj);
         //进行二次压缩
-//        second_Compress_Tragectory(beforeTraj);
+        second_Compress_Tragectory(beforeTraj);
         getTime.setEndTime(System.currentTimeMillis());
         System.out.println("IncrePW算法");
         System.out.println("压缩前的轨迹点数："+beforeTraj.size());

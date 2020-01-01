@@ -19,15 +19,16 @@ import java.util.List;
  */
 public class OPW {
 
-    private final static double maxDistError = 0.20;
+    private final static double maxDistError = 0.793299999;
 
+    /*
+     *开放窗口算法实现
+     *@param sourceList 源轨迹集
+     *@param maxdis 误差阈值
+     *@return 压缩后的轨迹点
+     **/
     public static ArrayList<Point> openWindowAlgorithm (
-                    List<Point> beforeTraj, double LimitDis) {    /*
-         *开放窗口算法实现
-         *@param sourceList 源轨迹集
-         *@param maxdis 误差阈值
-         *@return 压缩后的轨迹点
-         **/
+                    List<Point> beforeTraj, double LimitDis) {
 
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         int startPoint = 0;

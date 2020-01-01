@@ -16,16 +16,17 @@ import java.util.List;
  * @Date 2019/3/5
  */
 public class OPW_TR {
-    private final static double maxDist = 0.0000901090000298;
+    private final static double maxDist = 0.00026900869900109;
 
+    /*
+     *基于同步欧式距离的开放窗口算法
+     *@param sourceList 压缩前轨迹数据
+     *@param maxdis 阈值
+     *@return 压缩后轨迹
+     **/
     public static ArrayList<Point> openWindow_TRAlgorithm (
                   List<Point> beforeTraj, double maxdis) {
-        /*
-         *基于同步欧式距离的开放窗口算法
-         *@param sourceList 压缩前轨迹数据
-         *@param maxdis 阈值
-         *@return 压缩后轨迹
-         **/
+
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         int startPoint = 0;
         int floatPoint = 2;

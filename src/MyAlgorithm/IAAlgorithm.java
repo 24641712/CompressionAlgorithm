@@ -5,34 +5,32 @@ import estimate.Estimate;
 import utils.Distance;
 import utils.GetDataFromFile;
 import utils.GetTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 基本思想：第一个轨迹点是特征点，从第三个点
- * 开始期间一直增大到最大
- * 时的欧式距离的点是轨迹点。
- * 算法改进：找到最大特征点，将起点设定为浮动点的
- * 上一个点。
- * @Author ccl时
- * @Date 2019/4/20
+ * @version 1.0
+ * @Description :极大值点的在线轨迹数据压缩算法
+ * Copyright: Copyright (c)2019
+ * Company: Tope
+ * Created Date : 2019/10/2
  */
-public class IncrePW {
-
-    private final static double DPLimitDist1 = (float) 0.270500;
-    private static double IALimitDist2 = (float) 250.00000;
+public class IAAlgorithm {
+    private final static double DPLimitDist1 = (float) 0.000010500;
+    private static double IALimitDist2 = (float) 0.50000;
     static int index = 0;
     static List<Point> afterTraj = new ArrayList<Point>();
     static List<Point> afterTraj_copy = new ArrayList<Point>();
 
+    /*
+     *道格拉斯-普克（Algorithm.DP）算法
+     *@param beforeTraj 源轨迹集合
+     *@param start 起始点
+     *@param end 终止点
+     *@return void
+     **/
     static void DPAlgorithm(List<Point> beforeTraj,int start,int end){
-       /*
-        *道格拉斯-普克（Algorithm.DP）算法
-        *@param beforeTraj 源轨迹集合
-        *@param start 起始点
-        *@param end 终止点
-        *@return void
-        **/
         double maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
@@ -62,13 +60,13 @@ public class IncrePW {
     }
 
     public static double getMaxDist(List<Point> beforeTraj,int tzd,int k){
-       /*
-        *求特征点tzd与第k个点间的最大垂直欧氏距离
-        *@param beforeTraj 源轨迹点
-        *@param tzd 特征点
-        *@param k 轨迹点
-        *@return 最大欧式距离
-        **/
+        /*
+         *求特征点tzd与第k个点间的最大垂直欧氏距离
+         *@param beforeTraj 源轨迹点
+         *@param tzd 特征点
+         *@param k 轨迹点
+         *@return 最大欧式距离
+         **/
         double maxdist = 0;
         double curdist = 0;
         Point pa = beforeTraj.get(tzd);
@@ -85,44 +83,44 @@ public class IncrePW {
         return maxdist;
     }
 
+    /*
+     *最大欧式距离增加到最大时的轨迹点就是特征点
+     *@param beforeTraj 源轨迹点
+     *@return 压缩后的轨迹点
+     **/
     public static void IncrementPWAlgorithm(List<Point> beforeTraj){
-      /*
-       *最大欧式距离增加到最大时的轨迹点就是特征点
-       *@param beforeTraj 源轨迹点
-       *@return 压缩后的轨迹点
-       **/
-       int length = beforeTraj.size();
-       int tzd = 0;//特征点
-       double maxdist = 0,curdist;
-       for(int i=2;i<length;i++){
-           curdist = getMaxDist(beforeTraj,tzd,i);
+        int length = beforeTraj.size();
+        int tzd = 0;//特征点
+        double maxdist = 0,curdist;
+        for(int i=2;i<length;i++){
+            curdist = getMaxDist(beforeTraj,tzd,i);
 //           System.out.println("maxdist:"+maxdist+", curdist1:"+curdist);
-           //不是特征点
-           if(maxdist <= curdist){
-               maxdist = curdist;
+            //不是特征点
+            if(maxdist <= curdist){
+                maxdist = curdist;
 //               System.out.println("maxdist:"+maxdist+", curdist2:"+curdist);
-           }else{
-               if(maxdist > IALimitDist2){
+            }else{
+                if(maxdist > IALimitDist2){
 //                   System.out.println("起点："+tzd+", 终点y："+index);
 //                   System.out.println("删除了"+(index-tzd)+"个轨迹点");
-                   tzd = index;
-                   i = index+1;
-                   //获得轨迹点
-                   afterTraj.add(beforeTraj.get(index));
-                   afterTraj_copy.add(beforeTraj.get(index));
+                    tzd = index;
+                    i = index+1;
+                    //获得轨迹点
+                    afterTraj.add(beforeTraj.get(index));
+                    afterTraj_copy.add(beforeTraj.get(index));
 //                   System.out.println("add maxdist:"+maxdist);
-               }
-               maxdist = 0;
-           }
-       }
+                }
+                maxdist = 0;
+            }
+        }
     }
 
+    /*
+     *对压缩后的轨迹点进行二次压缩
+     *@param beforeTraj
+     *@return
+     **/
     public static void second_Compress_Tragectory(List<Point> beforeTraj){
-        /*
-         *对压缩后的轨迹点进行二次压缩
-         *@param beforeTraj
-         *@return
-         **/
         for(int i=0;i<afterTraj_copy.size()-1;i++){
             int left = afterTraj_copy.get(i).getPid();
             int right = afterTraj_copy.get(i+1).getPid();
@@ -135,14 +133,12 @@ public class IncrePW {
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
-
         beforeTraj =getData.getDataFromFile(20000,"1");
         getTime.setStartTime(System.currentTimeMillis());
-        //找最大轨迹点
+        //极大值点
         IncrementPWAlgorithm(beforeTraj);
-        System.out.println("一次压缩轨迹："+afterTraj_copy.size());
-        //进行二次压缩
-        second_Compress_Tragectory(beforeTraj);
+        //二次压缩
+//        second_Compress_Tragectory(beforeTraj);
         getTime.setEndTime(System.currentTimeMillis());
         System.out.println("IncrePW算法");
         System.out.println("压缩前的轨迹点数："+beforeTraj.size());
@@ -152,5 +148,6 @@ public class IncrePW {
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
     }
+
 
 }

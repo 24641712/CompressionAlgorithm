@@ -20,7 +20,7 @@ import java.util.List;
 public class DP {
 
     private static List<Point> afterTraj = new ArrayList<Point>();
-    private final static double LimitDis = (float) 0.63700298;
+    private final static double LimitDis = (float)0.2640598;
 
     //删除轨迹点
     protected static void Delpt(List<Point> list,int a,int b) {
@@ -31,14 +31,14 @@ public class DP {
         }
     }
 
+    /*
+     *道格拉斯-普克算法（Algorithm.DP）算法
+     *@param list 源轨迹集合
+     *@param p1 起始点
+     *@param p2 终止点
+     *@return void
+     **/
     static void DPAlgorithm(List<Point> beforeTraj,int start,int end){
-        /*
-         *道格拉斯-普克算法（Algorithm.DP）算法
-         *@param list 源轨迹集合
-         *@param p1 起始点
-         *@param p2 终止点
-         *@return void
-         **/
         double maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
