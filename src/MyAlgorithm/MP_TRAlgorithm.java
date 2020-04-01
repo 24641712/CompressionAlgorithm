@@ -7,18 +7,19 @@ import utils.GetDataFromFile;
 import utils.GetTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @version 1.0
- * @Description :极大值点的在线轨迹数据压缩算法
+ * @Description :
  * Copyright: Copyright (c)2019
- * Company: Tope
- * Created Date : 2019/10/2
+ * Created Date : 2020/3/29
  */
-public class IAAlgorithm {
-    private final static double DPLimitDist1 = (float) 0.000010500;
-    private static double IALimitDist2 = (float) 0.50000;
+public class MP_TRAlgorithm {
+
+    private final static double DPLimitDist1 = (float) 0.0673010500;
+    private static double IALimitDist2 = (float) 752.0000;
     static int index = 0;
     static List<Point> afterTraj = new ArrayList<Point>();
     static List<Point> afterTraj_copy = new ArrayList<Point>();
@@ -49,8 +50,6 @@ public class IAAlgorithm {
                 }
                 i++;
             }//end while
-
-//             System.out.println("maxdis="+maxdis+" index="+maxNO);
             if(maxdis >= DPLimitDist1) {
                 afterTraj.add(beforeTraj.get(maxNO));
                 DPAlgorithm(beforeTraj,start,maxNO);
@@ -59,14 +58,14 @@ public class IAAlgorithm {
         }
     }
 
+    /*
+     *求特征点tzd与第k个点间的最大垂直欧氏距离
+     *@param beforeTraj 源轨迹点
+     *@param tzd 特征点
+     *@param k 轨迹点
+     *@return 最大欧式距离
+     **/
     public static double getMaxDist(List<Point> beforeTraj,int tzd,int k){
-        /*
-         *求特征点tzd与第k个点间的最大垂直欧氏距离
-         *@param beforeTraj 源轨迹点
-         *@param tzd 特征点
-         *@param k 轨迹点
-         *@return 最大欧式距离
-         **/
         double maxdist = 0;
         double curdist = 0;
         Point pa = beforeTraj.get(tzd);
@@ -92,23 +91,22 @@ public class IAAlgorithm {
         int length = beforeTraj.size();
         int tzd = 0;//特征点
         double maxdist = 0,curdist;
+        int count = 0;
+        afterTraj.add(beforeTraj.get(tzd));
+        afterTraj_copy.add(beforeTraj.get(tzd));
         for(int i=2;i<length;i++){
+            System.out.println(count++);
             curdist = getMaxDist(beforeTraj,tzd,i);
-//           System.out.println("maxdist:"+maxdist+", curdist1:"+curdist);
             //不是特征点
             if(maxdist <= curdist){
                 maxdist = curdist;
-//               System.out.println("maxdist:"+maxdist+", curdist2:"+curdist);
             }else{
                 if(maxdist > IALimitDist2){
-//                   System.out.println("起点："+tzd+", 终点y："+index);
-//                   System.out.println("删除了"+(index-tzd)+"个轨迹点");
                     tzd = index;
-                    i = index+1;
+                    i = index+2;
                     //获得轨迹点
                     afterTraj.add(beforeTraj.get(index));
                     afterTraj_copy.add(beforeTraj.get(index));
-//                   System.out.println("add maxdist:"+maxdist);
                 }
                 maxdist = 0;
             }
@@ -133,21 +131,23 @@ public class IAAlgorithm {
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
-        beforeTraj =getData.getDataFromFile(20000,"1");
+        beforeTraj =getData.getDataFromFile(150000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         //极大值点
         IncrementPWAlgorithm(beforeTraj);
+        Collections.sort(afterTraj_copy);
         //二次压缩
-//        second_Compress_Tragectory(beforeTraj);
+        second_Compress_Tragectory(beforeTraj);
         getTime.setEndTime(System.currentTimeMillis());
-        System.out.println("IncrePW算法");
-        System.out.println("压缩前的轨迹点数："+beforeTraj.size());
         System.out.println("压缩后的轨迹点数："+afterTraj.size());
+        System.out.println("IA算法");
+        System.out.println("压缩前的轨迹点数："+beforeTraj.size());
+        System.out.println("过滤后的轨迹点数："+afterTraj.size());
         System.out.println("*********************");
         getTime.showTime();
+
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
     }
-
 
 }
