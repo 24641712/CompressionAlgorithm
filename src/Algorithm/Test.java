@@ -7,22 +7,21 @@ import utils.FilterNodes;
 import utils.GetDataFromFile;
 import utils.GetTime;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * 道格拉斯-普克算法的实现
- * @author ccl
+ * @version 1.0
+ * @Description :
+ * Copyright: Copyright (c)2019
+ * Created Date : 2020/5/25
  */
-public class DP {
+public class Test {
+
 
     private static List<Point> afterTraj = new ArrayList<Point>();
-    private final static double LimitDis = (float)0.3795598;
+    private final static double LimitDis = (float)9.6795598;
 
     //删除轨迹点
     protected static void Delpt(List<Point> list,int a,int b) {
@@ -50,13 +49,14 @@ public class DP {
             i=start+1;
             while(i < end){
                 Point pc = beforeTraj.get(i);
-                curdis = distance.getDistance(pa,pb,pc);
+                curdis = distance.getSedDist(pa,pb,pc);
                 if(maxdis < curdis)   {
                     maxdis = curdis;
                     maxNO = i;
                 }
                 i++;
             }//end while
+            System.out.println(maxdis);
             if(maxdis >= LimitDis) {
                 afterTraj.add(beforeTraj.get(maxNO));
                 DPAlgorithm(beforeTraj,start,maxNO);

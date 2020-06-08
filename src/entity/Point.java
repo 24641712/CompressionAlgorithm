@@ -1,5 +1,7 @@
 package entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -21,6 +23,8 @@ public class Point implements Comparable<Point> {
     private String date;  //年月日
 
     private String time;  //时分秒
+
+    private long totalseconds;
 
     private char Res='T';  //是否是特征点
 
@@ -96,6 +100,24 @@ public class Point implements Comparable<Point> {
 
     public void setPriority(double priority) {
         this.priority = priority;
+    }
+
+    public long getTotalseconds() {
+        return totalseconds;
+    }
+
+    public void setTotalseconds(String strdate,String strtime) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(strdate);
+        buffer.append(" ");
+        buffer.append(strtime);
+        try {
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(buffer.toString());
+            this.totalseconds = date1.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.totalseconds = totalseconds;
     }
 
     @Override

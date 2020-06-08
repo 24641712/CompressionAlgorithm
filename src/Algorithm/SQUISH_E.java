@@ -17,7 +17,7 @@ import java.util.List;
  * @Date 2019/3/5
  */
 public class SQUISH_E {
-    private final static double maxdis = 0.00009999;
+    private final static double maxdis = 0.0003190;
 
     public static  ArrayList<Point> SQUISH_EAlgorithm(List<Point> beforeTraj
                            ,double ratio,double maxdis){
@@ -121,6 +121,9 @@ public class SQUISH_E {
         afterTraj = SQUISH_EAlgorithm(beforeTraj,0.4,maxdis);
         getTime.setEndTime(System.currentTimeMillis());
         System.out.println("SQUISH-E算法");
+        System.out.println("压缩前轨迹点数："+beforeTraj.size());
+        System.out.println("压缩后轨迹点数："+afterTraj.size());
+        System.out.println("*********************");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);

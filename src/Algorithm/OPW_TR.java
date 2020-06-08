@@ -16,7 +16,7 @@ import java.util.List;
  * @Date 2019/3/5
  */
 public class OPW_TR {
-    private final static double maxDist = 0.00026900869900109;
+    private final static double maxDist = 0.000048;
 
     /*
      *基于同步欧式距离的开放窗口算法
@@ -41,7 +41,7 @@ public class OPW_TR {
             for(Point point : listPoint) {
                 disOfTwo = distance.getSedDist(beforeTraj.get(startPoint),
                         beforeTraj.get(floatPoint),point);
-
+//                System.out.println(disOfTwo);
                 if(disOfTwo >= maxdis){
                     flag = true;
                     break;
@@ -72,13 +72,12 @@ public class OPW_TR {
         return afterTraj;
     }
 
+    /*
+     *主函数
+     *@param args 参数
+     *@return void
+     **/
     public static void main(String []args) throws Exception{
-        /*
-         *主函数
-         *@param args 参数
-         *@return void
-         **/
-
         List<Point> beforeTraj = new ArrayList<Point>();
         List<Point> afterTraj = new ArrayList<Point>();
         Estimate estimate = new Estimate();

@@ -2,10 +2,7 @@ package utils;
 
 import entity.Point;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,43 +13,51 @@ import java.util.List;
  */
 public class GetDataFromFile {
 
-    private final static int size = 20000;
+    private final static int size = 1001734;
 
     public static List<Point> getDataFromFile(int number, String uid)
             throws Exception {
+        number = size;
         List<Point> list = new ArrayList<Point>();
         boolean flag = false;
-//        for(int i=1;i<=4;i++){
-            String path = "F:\\trajs\\"+4+".plt";
-            File file = new File(path);
-            if (file.exists() && file.isFile()) {
-                InputStreamReader read = new InputStreamReader(new FileInputStream(file));
-                BufferedReader bReader = new BufferedReader(read);
-                String str;
-                int id = 0;
-                while ((str = bReader.readLine()) != null) {
-                    Point point = new Point();
-                    String[] strings = str.split(",");
-                    point.setUid(uid);
-                    point.setPid(id++);
-                    point.setLatitude(Double.parseDouble(strings[0]));
-                    point.setLongitude(Double.parseDouble(strings[1]));
-                    point.setAltitude(Double.parseDouble(strings[3]));
-                    point.setDate(strings[5]);
-                    point.setTime(strings[6]);
-                    list.add(point);
-                    if(list.size()>=number){
-                        flag = true;
-//                        break;
-                    }
+//        String path = "F:\\trajs";
+        String path = "G:\\Geolife Trajectories 1.3\\Data\\001\\Trajectory";
+//        String path = "G:\\trajTest\\";
+        File dir = new File(path);
+        File []files = dir.listFiles();
+        int id = 0;
+        for(File file : files){
+            System.out.println(file.getName());
+            InputStreamReader read = new InputStreamReader(new FileInputStream(file));
+            BufferedReader bReader = new BufferedReader(read);
+            String str;
+            int skip = 0;
+            while ((str = bReader.readLine()) != null) {
+                if(skip<6){
+                    skip++;
+                    continue;
                 }
-                bReader.close();
-                read.close();
+                Point point = new Point();
+                String[] strings = str.split(",");
+                point.setUid(uid);
+                point.setPid(id++);
+                point.setLatitude(Double.parseDouble(strings[0]));
+                point.setLongitude(Double.parseDouble(strings[1]));
+                point.setAltitude(Double.parseDouble(strings[3]));
+                point.setDate(strings[5]);
+                point.setTime(strings[6]);
+                point.setTotalseconds(strings[5],strings[6]);
+                list.add(point);
+                if(list.size() >= number){
+                    bReader.close();
+                    read.close();
+                    return list;
+                }
             }
-//            if(flag == true)
-//                break;;
-//        }
-        return list.subList(0,size);
+            bReader.close();
+            read.close();
+        }
+        return list;
     }
 
 
@@ -85,4 +90,36 @@ public class GetDataFromFile {
             e.printStackTrace();
         }
     }
+
+    public static void writeToFile(List<Point> list) throws IOException {
+        String path = "G:\\trajTest\\20200525.plt";
+        OutputStream out = null;
+        File file = new File(path);
+        if(!file.exists()){
+            file.createNewFile();
+        }
+        try {
+            out = new FileOutputStream(file);
+            for(Point point:list){
+                String str = point.getLatitude()+","+point.getLongitude()+","
+                        +",0,492,39745.0902662037,2008-10-24,02:09:59\n";
+                out.write(str.getBytes());
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+
 }

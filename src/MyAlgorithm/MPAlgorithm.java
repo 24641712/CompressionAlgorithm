@@ -2,6 +2,7 @@ package MyAlgorithm;
 
 import entity.Point;
 import estimate.Estimate;
+import sql.SQLOPera;
 import utils.Distance;
 import utils.GetDataFromFile;
 import utils.GetTime;
@@ -17,16 +18,15 @@ import java.util.List;
  * Copyright: Copyright (c)2019
  * Created Date : 2019/10/2
  */
-public class MPAlgorithm
-{
-    private final static double DPLimitDist1 = (float) 0.0673010500;
-    private static double IALimitDist2 = (float) 752.0000;
+public class MPAlgorithm {
+    private final static double DPLimitDist1 = (float) 0.61373010500;
+    private static double IALimitDist2 = (float) 112.0000;
     static int index = 0;
     static List<Point> afterTraj = new ArrayList<Point>();
     static List<Point> afterTraj_copy = new ArrayList<Point>();
 
     /*
-     *道格拉斯-普克（Algorithm.DP）算法
+     *二次压缩过程
      *@param beforeTraj 源轨迹集合
      *@param start 起始点
      *@param end 终止点
@@ -36,7 +36,6 @@ public class MPAlgorithm
         double maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
-//        System.out.print("start="+start+"  end="+end);
         Point pa = beforeTraj.get(start);
         Point pb = beforeTraj.get(end);
         if(end-start >= 2){
@@ -51,6 +50,7 @@ public class MPAlgorithm
                 }
                 i++;
             }//end while
+//            System.out.println(maxdis);
             if(maxdis >= DPLimitDist1) {
                 afterTraj.add(beforeTraj.get(maxNO));
                 DPAlgorithm(beforeTraj,start,maxNO);
@@ -96,12 +96,12 @@ public class MPAlgorithm
         afterTraj.add(beforeTraj.get(tzd));
         afterTraj_copy.add(beforeTraj.get(tzd));
         for(int i=2;i<length;i++){
-            System.out.println(count++);
-            curdist = getMaxDist(beforeTraj,tzd,i);
+            curdist = getMaxDist(beforeTraj,tzd,i);///
             //不是特征点
             if(maxdist <= curdist){
                 maxdist = curdist;
             }else{
+//                System.out.println("maxdist1:"+maxdist);
                 if(maxdist > IALimitDist2){
                     tzd = index;
                     i = index+2;
@@ -112,6 +112,7 @@ public class MPAlgorithm
                 maxdist = 0;
             }
         }
+        afterTraj_copy.add(beforeTraj.get(beforeTraj.size()-1));
     }
 
     /*
@@ -132,23 +133,29 @@ public class MPAlgorithm
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
+        //获取数据
         beforeTraj =getData.getDataFromFile(150000,"1");
+
+        //运行时间
         getTime.setStartTime(System.currentTimeMillis());
         //极大值点
         IncrementPWAlgorithm(beforeTraj);
         Collections.sort(afterTraj_copy);
+
         //二次压缩
         second_Compress_Tragectory(beforeTraj);
         getTime.setEndTime(System.currentTimeMillis());
+        System.out.println(afterTraj_copy.size());
         System.out.println("压缩后的轨迹点数："+afterTraj.size());
-        System.out.println("IA算法");
+        System.out.println("MP算法");
         System.out.println("压缩前的轨迹点数："+beforeTraj.size());
         System.out.println("过滤后的轨迹点数："+afterTraj.size());
         System.out.println("*********************");
         getTime.showTime();
-
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
+        SQLOPera.batchInsert(afterTraj,2);
+//        GetDataFromFile.writeToFile(afterTraj);
     }
 
 

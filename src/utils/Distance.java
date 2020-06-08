@@ -11,13 +11,13 @@ import java.util.Date;
  */
 public class Distance {
 
+    /*
+     *计算两个轨迹点间的距离
+     *@param pa 轨迹点
+     *@param pb 轨迹点
+     *@return 两个轨迹点间的距离
+     **/
     protected double p2pdis(Point pa,Point pb) {
-        /*
-         *计算两个轨迹点间的距离
-         *@param pa 轨迹点
-         *@param pb 轨迹点
-         *@return 两个轨迹点间的距离
-         **/
         double distance;
         distance = (float)Math.sqrt(
                 (pa.getLatitude()-pb.getLatitude())*
@@ -27,14 +27,14 @@ public class Distance {
         return distance;
     }
 
+    /*
+     *利用正弦值计算点的垂直距离
+     *@param pa 轨迹点
+     *@param pb 轨迹点
+     *@param pc 轨迹点
+     *@return 垂直距离
+     **/
     public double CalculatedDis(Point pa, Point pb, Point pc){
-        /*
-         *利用正弦值计算点的垂直距离
-         *@param pa 轨迹点
-         *@param pb 轨迹点
-         *@param pc 轨迹点
-         *@return 垂直距离
-         **/
         double curdis = 0;
         double cosA,cosB,sinA;
         double c = p2pdis(pa,pb);
@@ -66,13 +66,13 @@ public class Distance {
         return d * Math.PI / 180.0;
     }
 
+    /*
+     *计算两个轨迹点间的距离
+     *@param pA 起始点
+     *@param pB 结束点
+     *@return 距离
+     **/
     protected  double geoDist(Point pA,Point pB){
-        /*
-         *计算两个轨迹点间的距离
-         *@param pA 起始点
-         *@param pB 结束点
-         *@return 距离
-         **/
         double radLat1 =  Rad(pA.getLatitude());
         double radLat2 = Rad(pB.getLatitude());
         double delta_lon = Rad(pB.getLongitude() - pA.getLongitude());
@@ -85,14 +85,14 @@ public class Distance {
         return distance;
     }
 
+    /*
+     *使用面积公式计算垂直距离
+     *@param A 起始点
+     *@param B 结束点
+     *@param C 当前点
+     *@return 点C到A和B所在直线的距离
+     **/
     public double getDistance(Point A,Point B,Point C){
-        /*
-         *使用面积公式计算垂直距离
-         *@param A 起始点
-         *@param B 结束点
-         *@param C 当前点
-         *@return 点C到A和B所在直线的距离
-         **/
         double distance = 0;
         double a = Math.abs(geoDist(A,B));//计算边长
         double b = Math.abs(geoDist(B,C));
@@ -103,19 +103,16 @@ public class Distance {
         return distance;
     }
 
+    /*
+     *计算C到A和B所在直线的同步欧氏距离
+     *@param A 起始点
+     *@param B 结束点
+     *@param C 当前点
+     *@return 同步欧式距离值
+     **/
     public double getSedDist(Point A,Point B,Point C){
-        /*
-         *计算C到A和B所在直线的同步欧氏距离
-         *@param A 起始点
-         *@param B 结束点
-         *@param C 当前点
-         *@return 同步欧式距离值
-         **/
-        Date timeA = new GetDate(A.getDate(),A.getTime()).getDate();
-        Date timeB = new GetDate(B.getDate(),B.getTime()).getDate();
-        Date timeC = new GetDate(C.getDate(),C.getTime()).getDate();
-        double percent = (timeC.getTime()-timeA.getTime())
-                /(timeB.getTime()-timeA.getTime());
+        double percent = (C.getTotalseconds()-A.getTotalseconds())
+                /(B.getTotalseconds()-A.getTotalseconds());
         double latitude = A.getLatitude()+
                 (B.getLatitude()-A.getLatitude())*percent;
         double longitude = A.getLongitude()+
@@ -123,7 +120,7 @@ public class Distance {
         Point point = new Point();
         point.setLatitude(latitude);
         point.setLongitude(longitude);
-        double distance = p2pdis(point,C);
+        double distance = p2pdis(point,C);//距离
         return distance;
     }
 

@@ -3,6 +3,7 @@ package Algorithm;
 import entity.Point;
 import estimate.Estimate;
 import utils.Distance;
+import utils.FilterNodes;
 import utils.GetDataFromFile;
 import utils.GetTime;
 
@@ -15,11 +16,12 @@ import java.util.List;
 
 /**
  * 基于垂直距离的开放窗口（OPW_Impro）算法
+ *
  * @Author ccl
  */
 public class OPW {
 
-    private final static double maxDistError = 0.793299999;
+    private final static double maxDistError = 0.042299999;
 
     /*
      *开放窗口算法实现
@@ -27,8 +29,7 @@ public class OPW {
      *@param maxdis 误差阈值
      *@return 压缩后的轨迹点
      **/
-    public static ArrayList<Point> openWindowAlgorithm (
-                    List<Point> beforeTraj, double LimitDis) {
+    public static ArrayList<Point> openWindowAlgorithm(List<Point> beforeTraj, double LimitDis) {
 
         ArrayList<Point> afterTraj = new ArrayList<Point>();
         int startPoint = 0;
@@ -38,33 +39,33 @@ public class OPW {
         Distance distance = new Distance();
         ArrayList<Point> listPoint = new ArrayList<Point>();
         listPoint.add(beforeTraj.get(nowPoint));
-        while(true) {
+        while (true) {
             boolean flag = false;
-            for(Point point : listPoint){
-                double disOfTwo = distance.getDistance(beforeTraj.get(startPoint),
-                            beforeTraj.get(floatPoint),point);
+            for (Point point : listPoint) {
+                double disOfTwo = distance.getDistance(beforeTraj.get(startPoint), beforeTraj.get(floatPoint), point);
 //                System.out.println("disOfTwo="+disOfTwo);
-                if(disOfTwo >= LimitDis) {
+                if (disOfTwo >= LimitDis) {
                     flag = true;
                     break;
                 }
             }
-            if(flag) {
+            if (flag){
                 afterTraj.add(beforeTraj.get(startPoint));
-                startPoint = floatPoint-1;
+                startPoint = floatPoint - 1;
                 floatPoint += 1;
-                if(floatPoint >= len) {
-                    afterTraj.add(beforeTraj.get(floatPoint-1));
+                if (floatPoint >= len)
+                {
+                    afterTraj.add(beforeTraj.get(floatPoint - 1));
                     break;
                 }
                 listPoint.clear();
                 listPoint.add(beforeTraj.get(startPoint));
-            }else {
+            } else {
                 listPoint.add(beforeTraj.get(floatPoint));
                 floatPoint += 1;
-                if(floatPoint >= len) {
+                if (floatPoint >= len) {
                     afterTraj.add(beforeTraj.get(startPoint));
-                    afterTraj.add(beforeTraj.get(floatPoint-1));
+                    afterTraj.add(beforeTraj.get(floatPoint - 1));
                     break;
                 }
             }
@@ -73,23 +74,25 @@ public class OPW {
         return afterTraj;
     }
 
-    public static void main(String []args) throws Exception{
+    public static void main(String[] args) throws Exception
+    {
 
-        List<Point> beforeTraj = new ArrayList<Point>();
-        List<Point> afterTraj = new ArrayList<Point>();
+        List<Point> beforeTraj = null;
+        List<Point> afterTraj = null;
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
-        beforeTraj = getData.getDataFromFile(10000,"1");
+        beforeTraj = getData.getDataFromFile(10000, "1");
         getTime.setStartTime(System.currentTimeMillis());
-        afterTraj = openWindowAlgorithm(beforeTraj,maxDistError);
+        afterTraj = openWindowAlgorithm(beforeTraj, maxDistError);
         getTime.setEndTime(System.currentTimeMillis());
         System.out.println("OPW算法");
-        System.out.println("压缩前轨迹点数："+beforeTraj.size());
-        System.out.println("压缩后轨迹点数："+afterTraj.size());
+        System.out.println("压缩前轨迹点数：" + beforeTraj.size());
+        System.out.println("压缩后轨迹点数：" + afterTraj.size());
         System.out.println("*********************");
         getTime.showTime();
-        estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
-        estimate.CompressionError(beforeTraj,afterTraj);
+        afterTraj = FilterNodes.filter(afterTraj);
+        estimate.CompressionRatio(beforeTraj.size(), afterTraj.size());
+        estimate.CompressionError(beforeTraj, afterTraj);
     }
 }

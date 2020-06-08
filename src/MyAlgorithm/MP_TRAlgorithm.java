@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class MP_TRAlgorithm {
 
-    private final static double DPLimitDist1 = (float) 0.0673010500;
-    private static double IALimitDist2 = (float) 752.0000;
+    private final static double DPLimitDist1 = (float) 0.000673010500;
+    private static double IALimitDist2 = (float) 14.0000;
     static int index = 0;
     static List<Point> afterTraj = new ArrayList<Point>();
     static List<Point> afterTraj_copy = new ArrayList<Point>();
@@ -44,6 +44,7 @@ public class MP_TRAlgorithm {
             while(i < end){
                 Point pc = beforeTraj.get(i);
                 curdis = distance.getDistance(pa,pb,pc);
+                System.out.println("DP---->"+curdis);
                 if(maxdis < curdis) {
                     maxdis = curdis;
                     maxNO = i;
@@ -73,7 +74,7 @@ public class MP_TRAlgorithm {
         Distance distance = new Distance();
         for(int i=tzd+1;i<k;i++){
             Point pc = beforeTraj.get(i);
-            curdist = distance.getDistance(pa,pb,pc);
+            curdist = distance.getSedDist(pa,pb,pc);
             if(maxdist<curdist){
                 maxdist = curdist;
                 index = i;
@@ -97,6 +98,10 @@ public class MP_TRAlgorithm {
         for(int i=2;i<length;i++){
             System.out.println(count++);
             curdist = getMaxDist(beforeTraj,tzd,i);
+            System.out.println("MP-TR---->"+curdist);
+            if(curdist>=14){
+                System.out.println(curdist);
+            }
             //不是特征点
             if(maxdist <= curdist){
                 maxdist = curdist;
@@ -131,7 +136,7 @@ public class MP_TRAlgorithm {
         Estimate estimate = new Estimate();
         GetDataFromFile getData = new GetDataFromFile();
         GetTime getTime = new GetTime();
-        beforeTraj =getData.getDataFromFile(150000,"1");
+        beforeTraj =getData.getDataFromFile(1000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         //极大值点
         IncrementPWAlgorithm(beforeTraj);
@@ -140,7 +145,7 @@ public class MP_TRAlgorithm {
         second_Compress_Tragectory(beforeTraj);
         getTime.setEndTime(System.currentTimeMillis());
         System.out.println("压缩后的轨迹点数："+afterTraj.size());
-        System.out.println("IA算法");
+        System.out.println("MP-TR算法");
         System.out.println("压缩前的轨迹点数："+beforeTraj.size());
         System.out.println("过滤后的轨迹点数："+afterTraj.size());
         System.out.println("*********************");

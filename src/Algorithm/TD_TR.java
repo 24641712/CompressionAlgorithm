@@ -18,20 +18,19 @@ import java.util.List;
  */
 public class TD_TR {
     private static ArrayList<Point> afterTraj = new ArrayList<Point>();//压缩后的轨迹点
-    static double LimitDis;//阈值
+    private  final static double LimitDis = 0.35500298;//阈值
     private static int delTotal=0;//统计删除数据
 
+    /*
+     *@param beforeTraj 压缩前轨迹点
+     *@param start 起始下标
+     *@param end 终止下标
+     *@return void
+     **/
     public static void TD_TRAlgorithm(List<Point> beforeTraj,int start,int end){
-        /*
-         *@param beforeTraj 压缩前轨迹点
-         *@param start 起始下标
-         *@param end 终止下标
-         *@return void
-         **/
-        double a,b,c,cosA,cosB,sinA,maxdis,curdis;
+        double maxdis,curdis;
         int i = 0,maxNO = 0;
         Distance distance = new Distance();
-//        System.out.println("start="+start+"  end="+end);
         Point pa = beforeTraj.get(start);
         Point pb = beforeTraj.get(end);
         if(end-start >= 2){
@@ -46,10 +45,8 @@ public class TD_TR {
                 }
                 i++;
             }//end while
-//            System.out.println("maxdis="+maxdis+" curList="+maxNO);
             if(maxdis > LimitDis) {
                 afterTraj.add(beforeTraj.get(maxNO));
-//                System.out.println("targetList:"+maxNO);
                 TD_TRAlgorithm(beforeTraj,start,maxNO);
                 TD_TRAlgorithm(beforeTraj,maxNO,end);
             }
@@ -86,12 +83,14 @@ public class TD_TR {
         GetDataFromFile getData = new GetDataFromFile();
         Estimate estimate = new Estimate();
         GetTime getTime = new GetTime();
-        LimitDis = 2.9000298;
         beforeTraj = getData.getDataFromFile(10000,"1");
         getTime.setStartTime(System.currentTimeMillis());
         TD_TRAlgorithm(beforeTraj,0,beforeTraj.size()-1);
         getTime.setEndTime(System.currentTimeMillis());
         System.out.println("TD-TR算法");
+        System.out.println("压缩前轨迹点数："+beforeTraj.size());
+        System.out.println("压缩后轨迹点数："+afterTraj.size());
+        System.out.println("*********************");
         getTime.showTime();
         estimate.CompressionRatio(beforeTraj.size(),afterTraj.size());
         estimate.CompressionError(beforeTraj,afterTraj);
